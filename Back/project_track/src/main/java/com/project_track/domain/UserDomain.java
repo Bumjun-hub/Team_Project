@@ -22,8 +22,8 @@ public class UserDomain {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long user_no;
 	@Column
-	@ColumnDefault("U")
-	private char user_authority;
+	@ColumnDefault("'U'")
+	private Character user_authority;
 	@Column
 	private String user_id;
 	@Column
