@@ -1,0 +1,17 @@
+.Headdiv{
+    height: 10%;
+    border:1px solid;
+    
+}
+
+.login{
+    text-align: center;
+    display: flex;
+    justify-content: right;
+   
+}
+
+.logintable{
+    height: 100px;
+    
+}
