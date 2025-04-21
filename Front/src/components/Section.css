@@ -1,11 +1,18 @@
 .Sectiondiv {
     width: 100%;
-    height: 90%;
-    border: 1px solid;
+    height:100%;
 }
 
-.SideBar {
+/* .SideBar {
     width: 20%;
     border:1px solid;
     height: 100%;
+    float:left;
+} */
+
+.Content{
+    border: 1px solid;
+    width:100%;
+    height: 100%;
+    float: right;
 }
