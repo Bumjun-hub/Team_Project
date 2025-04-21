@@ -5,18 +5,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project_track.service.UserService;
+import com.project_track.service.MemberService;
 
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class MemberController {
 	@Autowired
-	UserService user_service;
+	MemberService Member_service;
 	
 	@PostMapping("/insert")
 	public String insert() {
 		System.out.println("테스트");
-		user_service.insert();
+		Member_service.insert();
 		return "success";
 	}
 }

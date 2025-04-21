@@ -17,23 +17,23 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity(name="user")
 @DynamicInsert
-public class UserDomain {
+public class MemberDomain {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long user_no;
+	private Long member_no;
 	@Column
 	@ColumnDefault("'U'")
-	private Character user_authority;
+	private Character member_authority;
 	@Column
-	private String user_id;
+	private String member_id;
 	@Column
-	private String user_password;
+	private String member_password;
 	@Column
-	private String user_name;
+	private String member_name;
 	@Column
-	private String user_address;
+	private String member_address;
 	@Column
-	private String user_phone;
+	private String member_phone;
 	@Column
-	private String user_email;
+	private String member_email;
 }
