@@ -37,3 +37,6 @@ public class MemberDomain {
 	@Column
 	private String member_email;
 }
+
+
+
