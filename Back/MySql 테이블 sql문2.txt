@@ -53,3 +53,4 @@ create table track_exploration(
     , tree varchar(50)
     , foreign key(track_no) references track(track_no)
 );
+
