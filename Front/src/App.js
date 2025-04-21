@@ -1,30 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
 import Header from './components/Header';
 import Section from './components/Section';
-import axios from "axios";
-
+import Login from './pages/Login';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React from 'react';
+import Member from './pages/Member';
 
 function App() {
   return (
-    <div className="App">
-      
-      <Header/>
-      <button onClick={()=>{
-        axios
-          .post("/user/insert")
-          .then((result)=>{
-              console.log(result)
-          })
-      }}>클릭</button>
-      <Section/>
-      
 
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/member" element={<Member/>}/>
+      <Route path="/" element={
+        <div className="App">
+          <Header />
+          <Section />
+        </div>
+      } />
+    </Routes>
 
-
-
-
-    </div>
   );
 }
 
