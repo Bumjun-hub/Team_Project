@@ -18,14 +18,16 @@ const KakaoMap = () => {
                     var map = new window.kakao.maps.Map(container, options); // 지도 생성
 
 
-
-                    axios.get("http://localhost:8080/track/all")
+                    // 백엔드로부터 산 리스트 데이터를 받아오는 부분
+                    axios.get("http://localhost:8080/track/get_track_list_all")
                         .then((res) => {
                             const data = res.data;
 
-                            data.forEach(({ name, location }) => {
+                            data.forEach((item) => {
+                                const name = item.track_name;
+                                const location = item.track_location;
 
-                                // 데이터를 읽고 ,을 기준으로 lat과 lng로 위도 경도 나눔
+                                // 데이터를 읽고 ,을 기준으로 lat과 lng로 위도 경도 나눔(숫자로 전환)
                                 const [lat, lng] = location.split(',').map(Number);
 
                                 //마커가 생성될 위치
@@ -36,16 +38,26 @@ const KakaoMap = () => {
                                     position: markerPosition,
                                 });
 
+                                //마커를 지도에 표시
                                 marker.setMap(map);
 
-                                
+                                // 말풍선(InfoWindow) 생성
+                                const infowindow = new window.kakao.maps.InfoWindow({
+                                    content: `<div style="padding:5px;font-size:13px;">${name}</div>`,
+                                });
+
+                                // 🟡 마커에 마우스 올렸을 때 말풍선 표시
+                                window.kakao.maps.event.addListener(marker, 'mouseover', () => {
+                                    infowindow.open(map, marker);
+                                });
+
+                                // 🟡 마우스가 벗어나면 말풍선 닫기
+                                window.kakao.maps.event.addListener(marker, 'mouseout', () => {
+                                    infowindow.close();
+
+                                })
                             })
                         })
-
-
-
-
-
 
                     // 지도의 지형도를 표시
                     map.addOverlayMapTypeId(window.kakao.maps.MapTypeId.TERRAIN);
