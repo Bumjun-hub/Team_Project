@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project_track.service.MemberService;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/member")
 public class MemberController {
 	@Autowired
 	MemberService Member_service;

@@ -1,15 +1,15 @@
-use project_track;
+-- project_track 데이터베이스 생성
+CREATE DATABASE `project_track`;
 
--- user_authority의 check 값은 다음과 같습니다.('U' -> User, 'A' -> Admin)
-create table user(
-		user_no int auto_increment primary key
-        , user_authority char(1) default 'U' check(user_authority in ('U', 'A')) not null
-        , user_id varchar(20) not null
-        , user_password varchar(30) not null
-        , user_name varchar(20) not null
-        , user_address varchar(50) not null
-        , user_email varchar(50)
-		, user_phone varchar(15) 
+create table member(
+		member_no int auto_increment primary key
+        , member_authority char(1) default 'M' check(member_authority in ('M', 'A')) not null
+        , member_id varchar(20) not null
+        , member_password varchar(30) not null
+        , member_name varchar(20) not null
+        , member_address varchar(50) not null
+        , member_email varchar(50)
+		, member_phone varchar(15) 
 );
 
 -- track_type의 check 값은 다음과 같습니다.('M' -> Mountain, 'O' -> Ocean, 'H' -> Historic)
@@ -52,7 +52,3 @@ create table track_exploration(
     , tree varchar(50)
     , foreign key(track_no) references track(track_no)
 );
-
-
-
-
