@@ -1,11 +1,12 @@
+import KakaoMap from './KakaoMap';
 import './Section.css';
 const Section = (() => {
     return (
         <div className='Sectiondiv'>
-            <div className='SideBar'>
+            <KakaoMap/>
                 
             </div>
-        </div>
+        
     )
 })
 export default Section;
