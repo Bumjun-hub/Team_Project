@@ -7,5 +7,6 @@ import com.project_track.domain.TrackDomain;
 
 @Repository
 public interface TrackRepository extends JpaRepository<TrackDomain, Long>{
+	
 
 }
