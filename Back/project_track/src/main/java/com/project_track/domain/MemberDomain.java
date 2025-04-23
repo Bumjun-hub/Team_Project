@@ -15,14 +15,14 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name="user")
+@Entity(name="member")
 @DynamicInsert
 public class MemberDomain {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long member_no;
 	@Column
-	@ColumnDefault("'U'")
+	@ColumnDefault("'M'")
 	private Character member_authority;
 	@Column
 	private String member_id;
@@ -37,3 +37,6 @@ public class MemberDomain {
 	@Column
 	private String member_email;
 }
+
+
+

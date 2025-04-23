@@ -5,3 +5,9 @@
   aspect-ratio: 16 / 9;
   margin: 0 auto;
 }
+
+html,body,#root{
+  height: 100%;
+  margin:0;
+  padding: 0;
+}

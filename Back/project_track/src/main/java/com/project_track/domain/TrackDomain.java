@@ -21,5 +21,8 @@ public class TrackDomain {
 	private char track_type;
 	@Column
 	private String track_name;
+	@Column
+	private String track_location;	
 	
 }
+
