@@ -1,10 +1,13 @@
-import KakaoMap from './KakaoMap';
+import NaverMap from './NaverMap';
 import './Section.css';
+import SideBar from './Sidebar';
+
 const Section = (() => {
     return (
         <div className='Sectiondiv'>
-            <KakaoMap/>
-                
+            <SideBar/>
+            <NaverMap/>
+            
             </div>
         
     )
