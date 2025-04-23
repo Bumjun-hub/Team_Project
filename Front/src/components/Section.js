@@ -1,16 +1,15 @@
-import KakaoMap from './KakaoMap';
+import NaverMap from './NaverMap';
 import './Section.css';
-const Section = () => {
+import SideBar from './Sidebar';
+
+const Section = (() => {
     return (
-
         <div className='Sectiondiv'>
-            <div className='Content'>
-            <KakaoMap/>
+            <SideBar/>
+            <NaverMap/>
+            
             </div>
-
-            {/* <div className='SideBar'>
-            </div> */}
-        </div>
-    );
-};
+        
+    )
+})
 export default Section;

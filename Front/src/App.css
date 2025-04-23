@@ -1,7 +1,13 @@
 .App {
   width: 100%;
   max-width: 1600px;
-  height: 850px;
+  height: 1024px;
   aspect-ratio: 16 / 9;
   margin: 0 auto;
+}
+
+html,body,#root{
+  height: 100%;
+  margin:0;
+  padding: 0;
 }
