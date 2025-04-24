@@ -6,19 +6,36 @@ import Modal from './../pages/Modal';
 import { Link, Links, Routes } from 'react-router-dom';
 import Login from '../pages/Login';
 import Member from '../pages/Member';
+import { FaUserPlus } from "react-icons/fa";
+import { MdLogin } from "react-icons/md";
+import { FaHome } from "react-icons/fa";
 
 const Header = (() => {
     const [showModal, setShowModal] = useState(false);
     return (
         <>
-            <div className='Headdiv'>
-                <div className='login'>
-                    <button><Link to='/login' element={<Login/>}>로그인</Link></button>
-                    <button><Link to='/member' element={<Member/>}>회원가입</Link></button>
+            <div className='HeadDiv'>
+                <div className='LeftDiv'></div>
+                <div className='CenterDiv'>
+                    <Link to="/">
+                        <FaHome className='FaHome' />
+                    </Link>
                 </div>
-                <Button variant="primary" onClick={(modal) => setShowModal(true)}> 모달창 띄우기 </Button>
-                <Modal show={showModal} onHide={() => setShowModal(false)} />
 
+                <div className='RightDiv'>
+                    <div className='Login'>
+                        <Link to="/login" className="LoginButton">
+                            <MdLogin className="MdLogin" />
+                        </Link>
+
+                        <Link to="/member" className="MemberButton">
+                            <FaUserPlus className="FaUserPlus" />
+                        </Link>
+                    </div>
+                </div>
+
+                {/* <Button className='ModalButton' variant="primary" onClick={(modal) => setShowModal(true)}> 모달창 띄우기 </Button> */}
+                {/* <Modal show={showModal} onHide={() => setShowModal(false)} /> */}
 
             </div>
 

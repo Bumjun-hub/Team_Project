@@ -6,6 +6,7 @@ import { Routes, Route } from 'react-router-dom';
 import React from 'react';
 import Member from './pages/Member';
 import Sidebar from './components/Sidebar';
+import CsvGeocoder from './components/csvpapaparse';
 
 function App() {
   return (
@@ -16,9 +17,8 @@ function App() {
       <Route path="/" element={
         <div className="App">
           <Header />
-          
-          
           <Section />
+          <CsvGeocoder/>
         </div>
       } />
     </Routes>
