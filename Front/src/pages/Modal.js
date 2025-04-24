@@ -49,7 +49,7 @@ const ModalComponent = ({ show, onHide }) => {
                                 width="1000px"
                                 height="400"
                                 style={{ border: '1px solid #ccc', borderRadius: '8px' }}
-                                title="Naver Map"
+                                title="Naver Map" 
                             />
                         </div>
                     )}
