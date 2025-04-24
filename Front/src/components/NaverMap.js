@@ -5,7 +5,7 @@ const NaverMap = () => {
   useEffect(() => {
     // 네이버 지도 API 스크립트 로드
     const script = document.createElement("script");
-    script.src = "https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=vkxesou2dk&submodules=geocoder,coord";
+    script.src = "https://openapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=vkxesou2dk&submodules=geocoder,coord";
     script.async = true;
 
     script.onload = () => {
