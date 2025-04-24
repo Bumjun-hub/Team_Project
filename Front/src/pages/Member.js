@@ -1,4 +1,3 @@
-@ -1,90 +0,0 @@
 import "./Member.css"; // css
 import Header from "../components/Header"; // 헤더 고정
 import { Link } from "react-router-dom"; // 링크 (페이지 이동)
