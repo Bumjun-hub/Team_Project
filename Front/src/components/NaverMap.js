@@ -5,6 +5,7 @@ import Modal from './../pages/Modal';
 
 const NaverMap = () => {
   const [showModal, setShowModal] = useState(false);
+
   useEffect(() => {
 
 
@@ -108,6 +109,7 @@ const NaverMap = () => {
               } else {
                 marker.setAnimation(window.naver.maps.Animation.BOUNCE);
               }
+              setShowModal(true);
             });
 
 
@@ -134,7 +136,7 @@ const NaverMap = () => {
 
             const marker = new window.naver.maps.Marker({
               position,
-              map:null,
+              map: null,
               title: trackName,
               icon: {
                 content: '<div style="width:12px;height:12px;border-radius:50%;background:red;border:2px solid black;"></div>',
@@ -163,10 +165,12 @@ const NaverMap = () => {
             // 마커 클릭시 마커를 중심으로 카메라 이동 + 줌
             window.naver.maps.Event.addListener(marker, "click", () => {
               map.morph(position, 14);
+              setShowModal(true);
+
             });
 
             // 줌 변경 이벤트
-            window.naver.maps.Event.addListener(map, 'zoom_changed', function () {
+            window.naver.maps.Event.addListener(map, "zoom_changed", function () {
               const zoom = map.getZoom();
               redMarkers.forEach((m) => {
                 if (zoom >= 12) {
@@ -178,6 +182,9 @@ const NaverMap = () => {
               })
 
             })
+
+
+
 
 
           });
@@ -199,17 +206,23 @@ const NaverMap = () => {
   }, []);
 
   return (
-    <div
-      id="map"
-      style={{
-        width: '100%',
-        height: '100%',
-        border: '2px solid #ccc',
-        borderRadius: '10px',
-        margin: 'auto'
-      }}
-    ></div>
+    <>
+      <div
+        id="map"
+        style={{
+          width: '100%',
+          height: '100%',
+          border: '2px solid #ccc',
+          borderRadius: '10px',
+          margin: 'auto'
+        }}
+      ></div>
+
+      <Modal show={showModal} onHide={() => setShowModal(false)} />
+    </>
   );
+
+
 };
 
 export default NaverMap;
