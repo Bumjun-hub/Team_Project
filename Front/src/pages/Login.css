@@ -1,0 +1,85 @@
+.login-box {
+  width: 100vw;
+  height: 100vh;
+  max-width: 1920px;
+  max-height: 1080px;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 60px;
+}
+
+/* 국립공원 제목  */
+.login-title {
+  padding-top: 10px;
+}
+
+/* 곰 이미지 */
+.img {
+  width: 450px;        
+  height: auto;        
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+/* 전체 로그인 폼 */
+.login-form {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+  margin-top: 20px;
+}
+
+/* 아이디창, 비번창 */
+.login {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  width: 300px;
+  height: 50px;
+}
+
+/* 로그인 버튼 */
+.login-submit {
+  width: 100px;
+  height: 70px;
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 로그인 etc (회원가입, 관리자페이지 이동) */
+.login-etc {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 20px;
+  color: black;
+}
+
+.link-text {
+  color: black;
+  text-decoration: none;
+  margin: 0 14px;
+}
+
+.link-text:hover {
+  color: green !important;
+  text-decoration: none;
+  margin: 0 14px;
+}
+
+.link-text:hover {
+  text-decoration: underline;
+}
+
+.divider {
+  color: #ccc;
+}

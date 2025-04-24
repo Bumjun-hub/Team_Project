@@ -7,6 +7,7 @@ import React from 'react';
 import Member from './pages/Member';
 import Sidebar from './components/Sidebar';
 
+
 function App() {
   return (
 
@@ -16,8 +17,6 @@ function App() {
       <Route path="/" element={
         <div className="App">
           <Header />
-          
-          
           <Section />
         </div>
       } />
