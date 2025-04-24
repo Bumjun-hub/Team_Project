@@ -1,6 +1,6 @@
 .MountainModal {
-    max-width: 1050px;  /* 화면 너비의 80% */
-    width: auto;      /* 고정 너비로 하고 싶으면 이걸 사용 */
+    max-width: 40vw;  /* 화면 너비의 80% */
+    position:relative;      /* 고정 너비로 하고 싶으면 이걸 사용 */
   /* overflow-y: initial !important; */
   }
   
