@@ -19,3 +19,9 @@
   .ModalHeader{
     justify-content: center;
   }
+
+.MountainImg {
+  height: 300px;
+  width: 300px;
+  margin: auto 10px;
+}
