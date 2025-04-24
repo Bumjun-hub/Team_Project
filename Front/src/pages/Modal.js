@@ -15,7 +15,7 @@ const ModalComponent = ({ show, onHide }) => {
                     setShowIframe(false)// 닫을때 iframe도 같이 끄기
                     onHide()
                 }}
-                dialogClassName="MountainModal"
+                dialogClassName="Modal"
                 aria-labelledby="example-custom-modal-styling-title"
             >
                 <Modal.Header closeButton>
