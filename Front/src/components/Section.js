@@ -22,7 +22,7 @@ const Section = (() => {
 
         <div className='Sectiondiv'>
             <SideBar />
-            <NaverMap ref={mapRef} />
+            <NaverMap ref={mapRef} />   
         </div>
 
     )
