@@ -40,9 +40,7 @@ const NaverMap = () => {
         infoWindow.setContent([
           '<div style="padding:10px;width:380px;font-size:14px;line-height:20px;">',
           '<strong>LatLng</strong> : ' + latlng.toString() + '<br />',
-          '<strong>UTMK</strong> : ' + utmk.toString() + '<br />',
-          '<strong>TM128</strong> : ' + tm128.toString() + '<br />',
-          '<strong>NAVER</strong> : ' + naverCoord.toString() + '<br />',
+
           '</div>'
         ].join(''));
         infoWindow.open(map, latlng);
