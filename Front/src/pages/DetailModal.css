@@ -1,0 +1,138 @@
+.MountainModal {
+  width: 800px;
+  position: relative;
+}
+
+.ModalCloseWrapper {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+}
+
+.CloseBtn {
+  border: none;
+  background: white;
+  font-size: 20px;
+}
+
+.ModalImageWrapper {
+  width: 90%;
+  text-align: center;
+  margin-top: 3.5rem;
+}
+
+.MapImage {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.Modalbody {
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+.CourseInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0 0.5rem;
+}
+
+.FindRouteBtn {
+  background: white;
+  border: 1px solid #ccc;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.CourseTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.CourseTable th, .CourseTable td {
+  border: 1px solid #eee;
+  padding: 8px;
+  font-size: 14px;
+}
+
+.CourseTable th {
+  background-color: #f7f7f7;
+}
+
+.Tag.Easy {
+  background-color: #7ED957;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 8px;
+}
+
+.WeatherSection {
+  margin-bottom: 1.5rem;
+}
+
+.WeatherTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.WeatherTag {
+  background: #f1f1f1;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 13px;
+}
+
+.WriteBtn {
+  background: #fffbe6;
+  border: 1px solid #ffce00;
+  color: #ff9900;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.ReviewSection {
+  margin-top: 1.5rem;
+}
+
+.SpeechBubble {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 8px;
+  background: white;
+  position: relative;
+}
+
+.SpeechBubble.CutText {
+  max-width: 240px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.MoreBtn {
+  background-color: #ff0;
+  border-radius: 4px;
+  padding: 0 4px;
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+.SpeechPointer {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 12px solid #ccc;
+  margin: 0 auto;
+  margin-top: 4px;
+}
