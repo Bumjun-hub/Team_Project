@@ -6,7 +6,7 @@ import { Routes, Route } from 'react-router-dom';
 import React from 'react';
 import Member from './pages/Member';
 import Sidebar from './components/Sidebar';
-import CsvGeocoder from './components/csvpapaparse';
+import Admin from './pages/Admin';
 
 function App() {
   return (
@@ -14,11 +14,11 @@ function App() {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/member" element={<Member />} />
+      <Route path="/admin" element={<Admin/>}/>
       <Route path="/" element={
         <div className="App">
           <Header />
           <Section />
-          <CsvGeocoder/>
         </div>
       } />
     </Routes>

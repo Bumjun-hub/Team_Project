@@ -1,5 +1,4 @@
-.MountainModal {
-    max-width: 80vw;  /* 화면 너비의 80% */
+.Modal {
     width: 800px;      /* 고정 너비로 하고 싶으면 이걸 사용 */
   /* overflow-y: initial !important; */
   }
