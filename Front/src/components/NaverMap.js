@@ -1,16 +1,12 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 
-
 const NaverMap = () => {
 
   useEffect(() => {
     // 네이버 지도 API 스크립트 로드
     const naverApiKey = process.env.REACT_APP_NAVER_MAP_KEY;
     const script = document.createElement("script");
-    script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${naverApiKey}&submodules=geocoder,coord,animation`;
-    script.async = true;
-
     script.onload = () => {
       if (!window.naver || !window.naver.maps) {
         console.error("네이버 지도 객체를 불러오지 못했습니다.");
