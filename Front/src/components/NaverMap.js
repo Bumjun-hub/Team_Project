@@ -3,6 +3,7 @@ import axios from 'axios';
 
 
 const NaverMap = () => {
+  
   useEffect(() => {
     // 네이버 지도 API 스크립트 로드
     const script = document.createElement("script");
