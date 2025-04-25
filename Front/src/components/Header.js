@@ -3,51 +3,46 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Modal from './../pages/Modal';
-import { Link } from 'react-router-dom';
+import DetailModal from '../pages/DetailModal';
+import { Link, Links, Routes } from 'react-router-dom';
 import Login from '../pages/Login';
 import Member from '../pages/Member';
-import JoinModal from './join/JoinModal'; // ✅ 추가
 import { FaUserPlus } from "react-icons/fa";
 import { MdLogin } from "react-icons/md";
 import { FaHome } from "react-icons/fa";
 
-const Header = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [showLogin, setShowLogin] = useState(false); // 지영 로그인 모달 추가
+const Header = (() => {
+    const [showModal, setShowModal] = useState(false);
+    return (
+        <>
+            <div className='HeadDiv'>
+                <div className='LeftDiv'></div>
+                <div className='CenterDiv'>
+                    <Link to="/">
+                        <FaHome className='FaHome' />
+                    </Link>
+                </div>
 
-  return (
-    <>
-      <div className='Headdiv'>
-        <div className='login'>
-          <button onClick={() => setShowLogin(true)}>로그인</button>
-          <JoinModal show={showLogin} onHide={() => setShowLogin(false)}>
-            <Login onClose={() => setShowLogin(false)} />
-          </JoinModal>
-          <button><Link to="/member">회원가입</Link></button>
-        </div>
+                <div className='RightDiv'>
+                    <div className='Login'>
+                        <Link to="/login" className="LoginButton">
+                            <MdLogin className="MdLogin" />
+                        </Link>
 
-        <div className='HeadDiv'>
-          <div className='LeftDiv'></div>
-          <div className='CenterDiv'>
-            <Link to="/">
-              <FaHome className='FaHome' />
-            </Link>
-          </div>
+                        <Link to="/member" className="MemberButton">
+                            <FaUserPlus className="FaUserPlus" />
+                        </Link>
+                    </div>
+                </div>
 
-          <div className='RightDiv'>
-            <div className='Login'>
-              <Link to="/login" className="LoginButton">
-                <MdLogin className="MdLogin" />
-              </Link>
-              <Link to="/member" className="MemberButton">
-                <FaUserPlus className="FaUserPlus" />
-              </Link>
+                <Button className='ModalButton' variant="primary" onClick={(Modal) => setShowModal(true)}> 모달창 띄우기 </Button>
+                <Modal show={showModal} onHide={() => setShowModal(false)} />
+
+                <Button className='ModalButton' variant="primary" onClick={(DetailModal) => setShowModal(true)}> 디테일 모달 </Button>
+                <DetailModal show={showModal} onHide={() => setShowModal(false)} />
             </div>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-};
 
+        </>
+    )
+})
 export default Header;

@@ -1,5 +1,5 @@
 package com.project_track.domain;
 
-public class TrackDomain {
+public class ReviewDomain {
 
 }
