@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 
-
 const NaverMap = () => {
   
   useEffect(() => {
     // 네이버 지도 API 스크립트 로드
     const script = document.createElement("script");
-    script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${NAVER_API_KEY}&submodules=geocoder,coord,animation`;
+
+    const naverApiKey = process.env.REACT_APP_NAVER_MAP_KEY
+    
+    script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${naverApiKey}&submodules=geocoder,coord,animation`;
     script.async = true;
 
     script.onload = () => {
