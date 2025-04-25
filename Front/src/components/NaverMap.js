@@ -19,8 +19,12 @@ const NaverMap = () => {
 
       // 지도 생성
       const map = new window.naver.maps.Map('map', {
-        center: new window.naver.maps.LatLng(37.5665, 126.9780), // 서울
-        zoom: 10,
+        center: new window.naver.maps.LatLng(36.9665, 127.1780), // 서울
+        zoom: 8,
+        zoomControl: true,
+        zoomControlOptions: {
+          position: window.naver.maps.Position.TOP_RIGHT
+        }
       });
 
       // map 객체를 window에 저장 (zoonin zoomout 버튼에서 객체가 undefined로 표기되는 문제 수정)
