@@ -1,0 +1,35 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);  /* 반투명 어두운 배경 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background: white;               /* 흰 배경 */
+  padding: 32px 24px;              /* 내부 여백 (상하 32px, 좌우 24px) */
+  border-radius: 12px;             /* 모서리 둥글게 */
+  width: 600px;                    /* 💡 모달창 너비! → 이걸 줄이면 작아져 */
+  max-width: 90%;                  /* 화면이 작으면 90%로 줄어들도록 */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); /* 그림자 효과 */
+  position: relative;              /* 닫기버튼 위치 설정용 */
+  overflow: visible;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 24px;
+  font-weight: bold;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 10001;
+}
