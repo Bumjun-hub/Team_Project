@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./Sidebar.css";
-import { BiSearch } from "react-icons/bi";
 import Search from "./search/Search";
 import SearchList from "./search/SearchList";
 

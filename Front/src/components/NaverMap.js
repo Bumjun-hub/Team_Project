@@ -2,16 +2,11 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 
 const NaverMap = () => {
-  
+
   useEffect(() => {
     // 네이버 지도 API 스크립트 로드
+    const naverApiKey = process.env.REACT_APP_NAVER_MAP_KEY;
     const script = document.createElement("script");
-
-    const naverApiKey = process.env.REACT_APP_NAVER_MAP_KEY
-    
-    script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${naverApiKey}&submodules=geocoder,coord,animation`;
-    script.async = true;
-
     script.onload = () => {
       if (!window.naver || !window.naver.maps) {
         console.error("네이버 지도 객체를 불러오지 못했습니다.");
@@ -44,9 +39,7 @@ const NaverMap = () => {
         infoWindow.setContent([
           '<div style="padding:10px;width:380px;font-size:14px;line-height:20px;">',
           '<strong>LatLng</strong> : ' + latlng.toString() + '<br />',
-          '<strong>UTMK</strong> : ' + utmk.toString() + '<br />',
-          '<strong>TM128</strong> : ' + tm128.toString() + '<br />',
-          '<strong>NAVER</strong> : ' + naverCoord.toString() + '<br />',
+
           '</div>'
         ].join(''));
         infoWindow.open(map, latlng);

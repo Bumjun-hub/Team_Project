@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/track_course")
-public class TrackCourseController {
+@RequestMapping("/national_park")
+public class NationalParkController {
 
 }
