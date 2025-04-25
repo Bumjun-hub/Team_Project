@@ -2,16 +2,14 @@ import "./Login.css"; // css
 import Header from "../components/Header"; // 헤더 고정
 import { Link } from "react-router-dom"; // 링크 (페이지 이동)
 
-const Login = ({onClose}) => {
+const Login = () => {
     return (
         <>
-        {!onClose && <Header />}
+        <Header/>
         
         <div className="login-box">
-            {onClose && (
-                <button className="modal-close" onClick={onClose}>x</button>
-            )}
         
+
         {/* 로그인 인사말 */}
             <div className="login-title"> 
                 <h1>🐻  WELCOME</h1>
@@ -23,8 +21,8 @@ const Login = ({onClose}) => {
             <div className="login-form">
 
                 <div className="login">
-                    <input type="text" placeholder="아이디 입력" required />
-                    <input type="password" placeholder="비밀번호 입력" required />
+                    <input type="text" placeholder="아이디를 입력해주세요" required />
+                    <input type="password" placeholder="비밀번호를 입력해주세요" required />
                 </div>
                 
                     <input type="submit" value="로그인" className="login-submit" />             

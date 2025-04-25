@@ -10,11 +10,11 @@
     transform:translateX(0);
   }
   .sidebar-wrapper.closed {
-    transform: translateX(-300px);
+    transform: translateX(-350px);
   }
   
   .sidebar-content {
-    width: 300px;
+    width: 350px;
     height: 100%;
     background-color: white;
     border-right: 1px solid #7eb3ff;
