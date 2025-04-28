@@ -22,12 +22,7 @@ const Section = (() => {
 
         <div className='Sectiondiv'>
             <SideBar />
-            <NaverMap ref={mapRef} />
-            <div className='zoomcontrols'>
-                <button onClick={() => zoomMap('in')}>+</button>
-                <button onClick={() => zoomMap('out')}>-</button>
-            </div>
-
+            <NaverMap ref={mapRef} />   
         </div>
 
     )
