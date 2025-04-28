@@ -1,7 +1,14 @@
 import "./Login.css"; // css
 import { Link } from "react-router-dom"; // 링크 (페이지 이동)
+import { UseLogin } from "../components/join/UseLogin";
 
 const Login = ({onClose}) => {
+    const {
+        loginId, setLoginId,
+        loginPassword, setLoginPassword,
+        handleSubmit,
+    } = UseLogin();
+
     return (
         <div className="login-box">
             {onClose && (
@@ -19,11 +26,26 @@ const Login = ({onClose}) => {
             <div className="login-form">
 
                 <div className="login">
-                    <input type="text" placeholder="아이디를 입력해주세요" required />
-                    <input type="password" placeholder="비밀번호를 입력해주세요" required />
+                    <input
+                        type="text"
+                        placeholder="아이디를 입력해주세요"
+                        value={loginId}
+                        onChange={(e) => setLoginId(e.target.value)}
+                        required />
+
+                    <input
+                        type="password"
+                        placeholder="비밀번호를 입력해주세요"
+                        value={loginPassword}
+                        onChange={(e) => setLoginPassword(e.target.value)}
+                        required />
                 </div>
                 
-                    <input type="submit" value="로그인" className="login-submit" />             
+                    <input
+                        type="submit"
+                        value="로그인" 
+                        className="login-submit"
+                        onClick={handleSubmit}/>             
             </div>
                 
         {/* 회원가입, 관리자 */ }
