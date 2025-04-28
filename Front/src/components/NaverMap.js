@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 
-
 const NaverMap = () => {
 
   useEffect(() => {
@@ -19,59 +18,32 @@ const NaverMap = () => {
 
       // 지도 생성
       const map = new window.naver.maps.Map('map', {
-        center: new window.naver.maps.LatLng(37.5665, 126.9780), // 서울
-        zoom: 10,
+        center: new window.naver.maps.LatLng(36.9665, 127.1780),
+        zoom: 8,
+        zoomControl: true,
+        zoomControlOptions: {
+          position: window.naver.maps.Position.TOP_RIGHT
+        }
       });
 
-      // map 객체를 window에 저장 (zoonin zoomout 버튼에서 객체가 undefined로 표기되는 문제 수정)
       window.__naverMap__ = map;
 
+      // const infoWindow = new window.naver.maps.InfoWindow({ content: '' });
 
-      // InfoWindow 객체 생성
-      const infoWindow = new window.naver.maps.InfoWindow({ content: '' });
-
-      // 지도 클릭 시 위경도 및 좌표 변환 정보 출력
-      window.naver.maps.Event.addListener(map, 'click', function (e) {
-        const latlng = e.coord;
-        const utmk = window.naver.maps.TransCoord.fromLatLngToUTMK(latlng);
-        const tm128 = window.naver.maps.TransCoord.fromUTMKToTM128(utmk);
-        const naverCoord = window.naver.maps.TransCoord.fromTM128ToNaver(tm128);
-
-        utmk.x = parseFloat(utmk.x.toFixed(1));
-        utmk.y = parseFloat(utmk.y.toFixed(1));
-
-        infoWindow.setContent([
-          '<div style="padding:10px;width:380px;font-size:14px;line-height:20px;">',
-          '<strong>LatLng</strong> : ' + latlng.toString() + '<br />',
-
-          '</div>'
-        ].join(''));
-        infoWindow.open(map, latlng);
-
-        console.log(latlng.toString());
-        // console.log('UTMK:', utmk.toString());
-        // console.log('TM128:', tm128.toString());
-        // console.log('NAVER:', naverCoord.toString());
-      });
-
-
-      // 마커 불러오기 (국립공원 위치 마커)
-      axios.get("http://localhost:8080/track/get_track_list_all")
+      // 국립공원 마커 불러오기
+      axios.get("/national_park/get_all_list")
         .then((res) => {
           const data = res.data;
           data.forEach((item) => {
-            const name = item.track_name;
-            const location = item.track_location;
-            if (!location) return;
-
-            const [lat, lng] = location.split(',').map(Number);
-            const position = new window.naver.maps.LatLng(lat, lng);
+            const name = item.national_park_name;
+            const position = new window.naver.maps.LatLng(item.national_park_latitude, item.national_park_longitude);
 
             const marker = new window.naver.maps.Marker({
               position,
               map,
               title: name,
             });
+
 
             const infowindow = new window.naver.maps.InfoWindow({
               content: `<div style="padding:5px;font-size:13px;">${name}</div>`,
@@ -85,39 +57,49 @@ const NaverMap = () => {
               infowindow.close();
             });
 
-            // 마커 클릭시 마커를 중심으로 카메라 이동 + 줌
             window.naver.maps.Event.addListener(marker, "click", () => {
-              map.morph(position, 14);
-
+              map.morph(position, 12);
             });
+
+            window.naver.maps.Event.addListener(marker, "click", function () {
+              if (marker.getAnimation() !== null) {
+                marker.setAnimation(null);
+
+              } else {
+                marker.setAnimation(window.naver.maps.Animation.BOUNCE);
+
+              }
+            })
           });
         })
         .catch((error) => {
-          console.error("마커 데이터 요청 실패", error);
+          console.error("국립공원 마커 요청 실패", error);
         });
 
-      axios.get("http://localhost:8080/api/test")
+      // 트랙 마커 불러오기
+      const redMarkers = [];
+      axios.get("/track/get_all_track_list")
         .then((res) => {
           const data = res.data;
           data.forEach((item) => {
-            const { latitude, longitude, trackName } = item;
-            if (!latitude || !longitude) return;
-            const position = new window.naver.maps.LatLng(latitude, longitude);
+            const trackName = item.track_name;
+            const position = new window.naver.maps.LatLng(item.track_latitude, item.track_longitude);
 
             const marker = new window.naver.maps.Marker({
               position,
-              map,
+              map: null,
               title: trackName,
               icon: {
                 content: '<div style="width:12px;height:12px;border-radius:50%;background:red;border:2px solid black;"></div>',
                 size: new window.naver.maps.Size(12, 12),
                 anchor: new window.naver.maps.Point(6, 6),
-
               }
             });
 
+            redMarkers.push(marker);
+
             const infowindow = new window.naver.maps.InfoWindow({
-              content: `<div style="padding:5px;font-size:13px;">테스트${trackName}</div>`,
+              content: `<div style="padding:5px;font-size:13px;">${trackName}</div>`,
             });
 
             window.naver.maps.Event.addListener(marker, "mouseover", () => {
@@ -128,20 +110,32 @@ const NaverMap = () => {
               infowindow.close();
             });
 
-            // 마커 클릭시 마커를 중심으로 카메라 이동 + 줌
             window.naver.maps.Event.addListener(marker, "click", () => {
-              map.morph(position, 14);
+              map.morph(position, 12);
+            });
 
+            
+          });
+
+
+
+
+          // 줌에 따라 빨간 점 보이기
+          window.naver.maps.Event.addListener(map, 'zoom_changed', function () {
+            const zoom = map.getZoom();
+            redMarkers.forEach((m) => {
+              if (zoom >= 12) {
+                m.setMap(map);
+              } else {
+                m.setMap(null);
+              }
             });
           });
         })
         .catch((error) => {
-          console.error("마커 데이터 요청 실패", error);
+          console.error("트랙 마커 요청 실패", error);
         });
     };
-
-
-
 
     document.head.appendChild(script);
 
