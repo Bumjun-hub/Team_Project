@@ -1,9 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const NaverMap = () => {
+import DetailModal from './../pages/DetailModal';
 
+
+const NaverMap = () => {
+  const [showModal, setShowModal] = useState(false);
+
+  // 초기 모달 상태
+  const [showTab, setShowTab] = useState('course');
   useEffect(() => {
+
+    // 트랙 마커 불러오기
+    const redMarkers = [];
+    const blueMarkers = [];
+
     // 네이버 지도 API 스크립트 로드
     const naverApiKey = process.env.REACT_APP_NAVER_MAP_KEY;
     const script = document.createElement("script");
@@ -44,6 +55,8 @@ const NaverMap = () => {
               title: name,
             });
 
+            blueMarkers.push(marker);
+
 
             const infowindow = new window.naver.maps.InfoWindow({
               content: `<div style="padding:5px;font-size:13px;">${name}</div>`,
@@ -59,9 +72,12 @@ const NaverMap = () => {
 
             window.naver.maps.Event.addListener(marker, "click", () => {
               map.morph(position, 12);
-            });
+              setShowModal(true);
+              setShowTab('park');
+              blueMarkers.forEach((m) => m.setAnimation(null));
+              redMarkers.forEach((m) => m.setAnimation(null));
 
-            window.naver.maps.Event.addListener(marker, "click", function () {
+              // 클릭시 바운스 애니메이션
               if (marker.getAnimation() !== null) {
                 marker.setAnimation(null);
 
@@ -70,15 +86,21 @@ const NaverMap = () => {
 
               }
             })
+
+
           });
+
+
+
         })
         .catch((error) => {
           console.error("국립공원 마커 요청 실패", error);
         });
 
-      // 트랙 마커 불러오기
-      const redMarkers = [];
-      axios.get("/track/get_all_track_list")
+
+
+
+      axios.get("/track/get_all_list")
         .then((res) => {
           const data = res.data;
           data.forEach((item) => {
@@ -90,9 +112,10 @@ const NaverMap = () => {
               map: null,
               title: trackName,
               icon: {
-                content: '<div style="width:12px;height:12px;border-radius:50%;background:red;border:2px solid black;"></div>',
-                size: new window.naver.maps.Size(12, 12),
-                anchor: new window.naver.maps.Point(6, 6),
+                url: process.env.PUBLIC_URL + '/img/marker.png',
+                size: new window.naver.maps.Size(24, 24),
+                scaledSize: new window.naver.maps.Size(24, 24),
+                anchor: new window.naver.maps.Point(12, 24),
               }
             });
 
@@ -110,15 +133,26 @@ const NaverMap = () => {
               infowindow.close();
             });
 
-            window.naver.maps.Event.addListener(marker, "click", () => {
-              map.morph(position, 12);
-            });
+            window.naver.maps.Event.addListener(marker, "click", function () {
+              map.morph(position, 15);
+              redMarkers.forEach((m) => {
+                m.setAnimation(null);
+              });
+              setShowModal(true);
+              setShowTab('course');
 
-            
+
+              if (marker.getAnimation() !== null) {
+                marker.setAnimation(null);
+
+              } else {
+                marker.setAnimation(window.naver.maps.Animation.BOUNCE);
+
+              }
+            })
+
+
           });
-
-
-
 
           // 줌에 따라 빨간 점 보이기
           window.naver.maps.Event.addListener(map, 'zoom_changed', function () {
@@ -146,16 +180,23 @@ const NaverMap = () => {
   }, []);
 
   return (
-    <div
-      id="map"
-      style={{
-        width: '100%',
-        height: '100%',
-        border: '2px solid #ccc',
-        borderRadius: '10px',
-        margin: 'auto'
-      }}
-    ></div>
+    <>
+      {showModal && (
+        <DetailModal show={showModal} onHide={() => setShowModal(false)}
+          showTab={showTab} />
+      )}
+
+      <div
+        id="map"
+        style={{
+          width: '100%',
+          height: '100%',
+          border: '2px solid #ccc',
+          borderRadius: '10px',
+          margin: 'auto'
+        }}
+      ></div>
+    </>
   );
 };
 
