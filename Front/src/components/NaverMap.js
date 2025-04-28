@@ -78,7 +78,7 @@ const NaverMap = () => {
 
       // 트랙 마커 불러오기
       const redMarkers = [];
-      axios.get("/track/get_all_track_list")
+      axios.get("/track/get_all_list")
         .then((res) => {
           const data = res.data;
           data.forEach((item) => {
