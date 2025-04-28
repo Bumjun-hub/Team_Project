@@ -2,7 +2,6 @@ import './Header.css';
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Modal from './../pages/Modal';
 import DetailModal from '../pages/DetailModal';
 import { Link, Links, Routes } from 'react-router-dom';
 import Login from '../pages/Login';
@@ -39,9 +38,6 @@ const Header = (() => {
                       </Link>
                     </div>
                 </div>
-
-                <Button className='ModalButton' variant="primary" onClick={(Modal) => setShowModal(true)}> 모달창 띄우기 </Button>
-                <Modal show={showModal} onHide={() => setShowModal(false)} />
 
                 <Button className='ModalButton' variant="primary" onClick={(DetailModal) => setShowModal(true)}> 디테일 모달 </Button>
                 <DetailModal show={showModal} onHide={() => setShowModal(false)} />
