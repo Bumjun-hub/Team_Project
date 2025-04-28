@@ -1,216 +1,173 @@
-/* 
+import React, { useState } from "react";
+import "./SearchFilter.css";
+
 export default function SearchFilter() {
-    
-    return(
-        <div>
-            <div>
-                위치
+    const [selectedCity, setSelectedCity] = useState('');
+    const [selectedDistrict, setSelectedDistrict] = useState('');
+
+    const [difficultyEnabled, setDifficultyEnabled] = useState(false);
+    const [timeEnabled, setTimeEnabled] = useState(false);
+    const [lengthEnabled, setLengthEnabled] = useState(false);
+
+    const [selectedDifficulty, setSelectedDifficulty] = useState(''); // 단일 선택
+
+    const [time, setTime] = useState(1);
+    const [length, setLength] = useState(1);
+
+    const districtOptions = {
+        서울특별시: ["강남구", "노원구", "성북구", "서대문구"],
+        경기도: ["수원시", "성남시", "용인시", "고양시"],
+        부산: ["해운대구", "수영구", "부산진구", "동래구"]
+    };
+
+    const handleCityChange = (e) => {
+        const newCity = e.target.value;
+        setSelectedCity(newCity);
+        setSelectedDistrict('');
+    };
+
+    const getTimeLabel = (value) => {
+        switch (value) {
+            case 1: return "30분 미만";
+            case 2: return "30분 ~ 1시간";
+            case 3: return "1시간 ~ 1시간 30분";
+            case 4: return "2시간 이상";
+            default: return "";
+        }
+    };
+
+    const getLengthLabel = (value) => {
+        switch (value) {
+            case 1: return "1km 미만";
+            case 2: return "1~2km";
+            case 3: return "2~3km";
+            case 4: return "3~4km";
+            case 5: return "4~5km";
+            case 6: return "5km 이상";
+            default: return "";
+        }
+    };
+
+    return (
+        <div className="search-filter-container">
+
+            {/* 지역검색 */}
+            <div className="filter-section">
+                <div className="filter-title">지역검색</div>
+                <div className="filter-row">
+                    <div className="filter-item">
+                        <label className="filter-label">시/도:</label>
+                        <select
+                            className="filter-select"
+                            value={selectedCity}
+                            onChange={handleCityChange}
+                        >
+                            <option value="">선택해주세요</option>
+                            {Object.keys(districtOptions).map((city) => (
+                                <option key={city} value={city}>{city}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="filter-item">
+                        <label className="filter-label">구:</label>
+                        <select
+                            className="filter-select"
+                            value={selectedDistrict}
+                            onChange={(e) => setSelectedDistrict(e.target.value)}
+                            disabled={!selectedCity}
+                        >
+                            <option value="">선택해주세요</option>
+                            {selectedCity && districtOptions[selectedCity].map((district) => (
+                                <option key={district} value={district}>{district}</option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
             </div>
-            <div>
-                난이도<br/>
-                소요시간<br/>
-                코스 길이<br/>
+
+            {/* 상세코스 */}
+            <div className="filter-section">
+                <div className="filter-title">상세 코스</div>
+
+                {/* 코스 난이도 */}
+                <div className="filter-row">
+                    <input 
+                        type="checkbox" 
+                        checked={difficultyEnabled}
+                        onChange={() => setDifficultyEnabled(!difficultyEnabled)}
+                    />
+                    <label className="filter-label">코스 난이도</label>
+                </div>
+                {difficultyEnabled && (
+                    <div className="checkbox-group">
+                        {["쉬움", "보통", "어려움"].map((level) => (
+                            <label key={level} className="round-checkbox-label">
+                                <input
+                                    type="checkbox"
+                                    value={level}
+                                    checked={selectedDifficulty === level}
+                                    onChange={() => setSelectedDifficulty(level)}
+                                    className="round-checkbox"
+                                />
+                                {level}
+                            </label>
+                        ))}
+                    </div>
+                )}
+
+                {/* 구간 소요 시간 */}
+                <div className="filter-row space-between">
+                    <div className="filter-row">
+                        <input 
+                            type="checkbox" 
+                            checked={timeEnabled}
+                            onChange={() => setTimeEnabled(!timeEnabled)}
+                        />
+                        <label className="filter-label">구간 소요 시간</label>
+                    </div>
+                    {timeEnabled && <div className="slider-value-inline">{getTimeLabel(time)}</div>}
+                </div>
+                {timeEnabled && (
+                    <div className="slider-container">
+                        <input
+                            type="range"
+                            min="1"
+                            max="4"
+                            step="1"
+                            value={time}
+                            onChange={(e) => setTime(Number(e.target.value))}
+                            className="filter-slider"
+                        />
+                    </div>
+                )}
+
+                {/* 구간 길이 */}
+                <div className="filter-row space-between">
+                    <div className="filter-row">
+                        <input 
+                            type="checkbox" 
+                            checked={lengthEnabled}
+                            onChange={() => setLengthEnabled(!lengthEnabled)}
+                        />
+                        <label className="filter-label">구간 길이</label>
+                    </div>
+                    {lengthEnabled && <div className="slider-value-inline">{getLengthLabel(length)}</div>}
+                </div>
+                {lengthEnabled && (
+                    <div className="slider-container">
+                        <input
+                            type="range"
+                            min="1"
+                            max="6"
+                            step="1"
+                            value={length}
+                            onChange={(e) => setLength(Number(e.target.value))}
+                            className="filter-slider"
+                        />
+                    </div>
+                )}
             </div>
         </div>
     );
-}
- */
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Slider, { SliderThumb } from '@mui/material/Slider';
-import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import Tooltip from '@mui/material/Tooltip';
-import Box from '@mui/material/Box';
-
-function ValueLabelComponent(props) {
-  const { children, value } = props;
-
-  return (
-    <Tooltip enterTouchDelay={0} placement="top" title={value}>
-      {children}
-    </Tooltip>
-  );
-}
-
-ValueLabelComponent.propTypes = {
-  children: PropTypes.element.isRequired,
-  value: PropTypes.node,
-};
-
-const iOSBoxShadow =
-  '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)';
-
-const IOSSlider = styled(Slider)(({ theme }) => ({
-  color: '#007bff',
-  height: 5,
-  padding: '15px 0',
-  '& .MuiSlider-thumb': {
-    height: 20,
-    width: 20,
-    backgroundColor: '#fff',
-    boxShadow: '0 0 2px 0px rgba(0, 0, 0, 0.1)',
-    '&:focus, &:hover, &.Mui-active': {
-      boxShadow: '0px 0px 3px 1px rgba(0, 0, 0, 0.1)',
-      // Reset on touch devices, it doesn't add specificity
-      '@media (hover: none)': {
-        boxShadow: iOSBoxShadow,
-      },
-    },
-    '&:before': {
-      boxShadow:
-        '0px 0px 1px 0px rgba(0,0,0,0.2), 0px 0px 0px 0px rgba(0,0,0,0.14), 0px 0px 1px 0px rgba(0,0,0,0.12)',
-    },
-  },
-  '& .MuiSlider-valueLabel': {
-    fontSize: 12,
-    fontWeight: 'normal',
-    top: -6,
-    backgroundColor: 'unset',
-    color: theme.palette.text.primary,
-    '&::before': {
-      display: 'none',
-    },
-    '& *': {
-      background: 'transparent',
-      color: '#000',
-      ...theme.applyStyles('dark', {
-        color: '#fff',
-      }),
-    },
-  },
-  '& .MuiSlider-track': {
-    border: 'none',
-    height: 5,
-  },
-  '& .MuiSlider-rail': {
-    opacity: 0.5,
-    boxShadow: 'inset 0px 0px 4px -2px #000',
-    backgroundColor: '#d0d0d0',
-  },
-  ...theme.applyStyles('dark', {
-    color: '#0a84ff',
-  }),
-}));
-
-const PrettoSlider = styled(Slider)({
-  color: '#52af77',
-  height: 8,
-  '& .MuiSlider-track': {
-    border: 'none',
-  },
-  '& .MuiSlider-thumb': {
-    height: 24,
-    width: 24,
-    backgroundColor: '#fff',
-    border: '2px solid currentColor',
-    '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
-      boxShadow: 'inherit',
-    },
-    '&::before': {
-      display: 'none',
-    },
-  },
-  '& .MuiSlider-valueLabel': {
-    lineHeight: 1.2,
-    fontSize: 12,
-    background: 'unset',
-    padding: 0,
-    width: 32,
-    height: 32,
-    borderRadius: '50% 50% 50% 0',
-    backgroundColor: '#52af77',
-    transformOrigin: 'bottom left',
-    transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
-    '&::before': { display: 'none' },
-    '&.MuiSlider-valueLabelOpen': {
-      transform: 'translate(50%, -100%) rotate(-45deg) scale(1)',
-    },
-    '& > *': {
-      transform: 'rotate(45deg)',
-    },
-  },
-});
-
-const AirbnbSlider = styled(Slider)(({ theme }) => ({
-  color: '#3a8589',
-  height: 3,
-  padding: '13px 0',
-  '& .MuiSlider-thumb': {
-    height: 27,
-    width: 27,
-    backgroundColor: '#fff',
-    border: '1px solid currentColor',
-    '&:hover': {
-      boxShadow: '0 0 0 8px rgba(58, 133, 137, 0.16)',
-    },
-    '& .airbnb-bar': {
-      height: 9,
-      width: 1,
-      backgroundColor: 'currentColor',
-      marginLeft: 1,
-      marginRight: 1,
-    },
-  },
-  '& .MuiSlider-track': {
-    height: 3,
-  },
-  '& .MuiSlider-rail': {
-    color: '#d8d8d8',
-    opacity: 1,
-    height: 3,
-    ...theme.applyStyles('dark', {
-      color: '#bfbfbf',
-      opacity: undefined,
-    }),
-  },
-}));
-
-function AirbnbThumbComponent(props) {
-  const { children, ...other } = props;
-  return (
-    <SliderThumb {...other}>
-      {children}
-      <span className="airbnb-bar" />
-      <span className="airbnb-bar" />
-      <span className="airbnb-bar" />
-    </SliderThumb>
-  );
-}
-
-AirbnbThumbComponent.propTypes = {
-  children: PropTypes.node,
-};
-
-export default function CustomizedSlider() {
-  return (
-    <Box sx={{ width: 320 }}>
-      <Typography gutterBottom>iOS</Typography>
-      <IOSSlider aria-label="ios slider" defaultValue={60} valueLabelDisplay="on" />
-      <Box sx={{ m: 3 }} />
-      <Typography gutterBottom>pretto.fr</Typography>
-      <PrettoSlider
-        valueLabelDisplay="auto"
-        aria-label="pretto slider"
-        defaultValue={20}
-      />
-      <Box sx={{ m: 3 }} />
-      <Typography gutterBottom>Tooltip value label</Typography>
-      <Slider
-        valueLabelDisplay="auto"
-        slots={{
-          valueLabel: ValueLabelComponent,
-        }}
-        aria-label="custom thumb label"
-        defaultValue={20}
-      />
-      <Box sx={{ m: 3 }} />
-      <Typography gutterBottom>구간 길이</Typography>
-      <AirbnbSlider
-        slots={{ thumb: AirbnbThumbComponent }}
-        getAriaLabel={(index) => (index === 0 ? 'Minimum price' : 'Maximum price')}
-        defaultValue={[20, 40]}
-      />
-    </Box>
-  );
 }
