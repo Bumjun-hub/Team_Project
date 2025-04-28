@@ -19,21 +19,37 @@ public class TrackController {
 	@Autowired
 	TrackService track_service;
 	
-	@GetMapping("/get_all_track_list")
+	@GetMapping("/get_all_list")
 	public List<TrackDomain> get_all_track_list(){
 		List<TrackDomain> result_list=track_service.get_all_track_list();
-		return result_list;
+		if(result_list!=null) {
+			return result_list;
+		}
+		return null;
 	}
 	
-	@GetMapping("/get_track")
-	public TrackDomain get_track(@RequestParam("track_no") Integer track_no, @RequestParam("national_park_no") Integer national_park_no) {
+	@GetMapping("/get_list_national_park")
+	public List<TrackDomain> get_list_national_park(@RequestParam("national_park_no") Integer national_park_no){
+		if(national_park_no==null) {
+			return null;
+		}
+		List<TrackDomain> result_list=track_service.get_list_national_park(national_park_no);
+		if(result_list!=null) {
+			return result_list;
+		}
+		return null;
+	}
+	
+	@GetMapping("/get_one_object")
+	public TrackDomain get_one_object(@RequestParam("track_no") Integer track_no, @RequestParam("national_park_no") Integer national_park_no) {
+		if(track_no==null||national_park_no==null) {
+			return null;
+		}
 		TrackId track_id=new TrackId();
 		track_id.setNational_park_no(national_park_no);
 		track_id.setTrack_no(track_no);
-		
-		Optional<TrackDomain> result=track_service.get_track(track_id);
+		Optional<TrackDomain> result=track_service.get_one_object(track_id);
 		if(result.isPresent()) {
-			System.out.println("1234");
 			return result.get();
 		}
 		return null;
