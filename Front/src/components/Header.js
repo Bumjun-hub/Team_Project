@@ -14,7 +14,7 @@ const Header = (() => {
     const [showModal, setShowModal] = useState(false);
     const [showLogin, setShowLogin] = useState(false); // 지영 로그인 모달 추가
     return (
-        <>
+        <div className='Header'>
             <div className='HeadDiv'>
                 <div className='LeftDiv'></div>
                 <div className='CenterDiv'>
@@ -22,7 +22,7 @@ const Header = (() => {
                         <FaHome className='FaHome' />
                     </Link>
                 </div>
-
+                
                 <div className='RightDiv'>
                     <div className='Login'>
                       {/* 지영 로그인 모달 */}
@@ -40,10 +40,11 @@ const Header = (() => {
                 </div>
 
                 {/* <Button className='ModalButton' variant="primary" onClick={(DetailModal) => setShowModal(true)}> 디테일 모달 </Button> */}
-                <DetailModal show={showModal} onHide={() => setShowModal(false)} />
+                {/* <DetailModal show={showModal} onHide={() => setShowModal(false)} /> */}
+
             </div>
 
-        </>
+        </div>
     )
 })
 export default Header;
