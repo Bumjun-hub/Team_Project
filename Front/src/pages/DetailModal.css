@@ -1,5 +1,8 @@
+
+
 .fade-in {
   animation: fadeInModal 0.5s ease forwards;
+  
 }
 
 .fade-out {
@@ -246,4 +249,14 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
+}
+
+/* DetailModal 높이 커스텀 */
+.detail-modal-custom .modal-dialog {
+  max-height: 90vh;  /* 화면 높이의 90%까지 */
+  height: 90vh;      /* 원하는 높이 설정 */
+}
+
+.detail-modal-custom .modal-content {
+  height: 100%;
 }
