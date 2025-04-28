@@ -15,12 +15,16 @@ public class TrackService {
 	@Autowired
 	TrackRepository track_repository;
 
-	public Optional<TrackDomain> get_track(TrackId track_id) {
-		return track_repository.findById(track_id);
-	}
-
 	public List<TrackDomain> get_all_track_list() {
 		return track_repository.findAll();
+	}
+
+	public List<TrackDomain> get_list_national_park(Integer national_park_no) {
+		return track_repository.get_list_national_park(national_park_no);
+	}
+
+	public Optional<TrackDomain> get_one_object(TrackId track_id) {
+		return track_repository.findById(track_id);
 	}
 	
 

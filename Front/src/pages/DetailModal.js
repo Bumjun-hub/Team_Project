@@ -33,10 +33,10 @@ const courses = [
     },
 ];
 
-const DetailModal = ({ show, onHide }) => {
+const DetailModal = ({ show, onHide,showTab }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const [showAddReview, setShowAddReview] = useState(false);
-    const [activeTab, setActiveTab] = useState('course');
+    const [activeTab, setActiveTab] = useState(showTab || 'course');
     const [currentCourseIndex, setCurrentCourseIndex] = useState(0);
     const [fade, setFade] = useState(false);
     const [contentFade, setContentFade] = useState(true);
@@ -89,7 +89,8 @@ const DetailModal = ({ show, onHide }) => {
 
     return (
         <>
-            <Modal show={show} onHide={onHide} aria-labelledby="modal-title" className={fade ? "fade-in" : "fade-out"}>
+            <Modal show={show} onHide={onHide} aria-labelledby="modal-title" className={fade ? "fade-in" : "fade-out"}
+            dialogClassName="detail-modal-custom">
                 <div className="ModalTopWrapper">
                     <div className="TabWrapper">
                         <button
@@ -98,12 +99,14 @@ const DetailModal = ({ show, onHide }) => {
                         >
                             코스 정보
                         </button>
+
                         <button
                             className={`TabButton ${activeTab === 'park' ? "ActiveTab" : ""}`}
                             onClick={() => switchTab('park')}
                         >
                             국립공원 소개
                         </button>
+
                     </div>
 
                     <div className="ModalCloseWrapper">
