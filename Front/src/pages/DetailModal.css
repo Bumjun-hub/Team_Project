@@ -1,138 +1,249 @@
-.MountainModal {
-  width: 800px;
-  position: relative;
+.fade-in {
+  animation: fadeInModal 0.5s ease forwards;
+}
+
+.fade-out {
+  animation: fadeOutModal 0.5s ease forwards;
+}
+
+@keyframes fadeInModal {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOutModal {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+/* 탭 및 페이지 내용 전환용 fade */
+.content-fade-in {
+  animation: contentFadeIn 0.3s ease forwards;
+}
+
+.content-fade-out {
+  animation: contentFadeOut 0.3s ease forwards;
+}
+
+@keyframes contentFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes contentFadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.ModalTopWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
 }
 
 .ModalCloseWrapper {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 10;
+  display: flex;
 }
 
-.CloseBtn {
+/* 수정: TabWrapper를 왼쪽 정렬 */
+.TabWrapper {
+  display: flex;
+  gap: 12px;
+}
+
+.TabButton {
+  padding: 0px 20px;
+  background: none;
   border: none;
-  background: white;
-  font-size: 20px;
+  font-size: 16px;
+  color: #555;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin: 0 8px;
+  transition: all 0.3s;
 }
 
+.TabButton:hover {
+  color: #000;
+}
+
+.ActiveTab {
+  color: #000;
+  font-weight: bold;
+  border-bottom: 2px solid #007bff;
+}
+
+/* Modal 상단 닫기버튼 */
+.ModalCloseWrapper {
+  display: flex;
+  justify-content: flex-end;
+  padding: 5px;
+}
+
+/* 이미지 영역 */
 .ModalImageWrapper {
-  width: 90%;
   text-align: center;
-  margin-top: 3.5rem;
+  padding: 5px;
 }
 
 .MapImage {
-  width: 100%;
-  border-radius: 12px;
+  width: 90%;
+  height: auto;
+  max-width: 600px;
+  border-radius: 10px;
 }
 
+/* Modal Body */
 .Modalbody {
-  max-height: calc(100vh - 200px);
-  overflow-y: auto;
+  padding: 20px;
 }
 
+/* 코스 제목 & 길찾기 버튼 */
 .CourseInfo {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 1rem 0 0.5rem;
+  margin-bottom: 10px;
 }
 
+/* 길찾기 버튼 */
 .FindRouteBtn {
-  background: white;
-  border: 1px solid #ccc;
-  padding: 4px 8px;
-  border-radius: 6px;
+  background-color: #469af3;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 5px;
+  font-size: 14px;
   cursor: pointer;
 }
 
+/* 코스 정보 테이블 */
 .CourseTable {
   width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 1rem;
+  margin-top: 10px;
+  margin-bottom: 20px;
   text-align: center;
+  border-collapse: collapse;
 }
 
 .CourseTable th, .CourseTable td {
-  border: 1px solid #eee;
   padding: 8px;
-  font-size: 14px;
+  border-bottom: 1px solid #ddd;
 }
 
-.CourseTable th {
-  background-color: #f7f7f7;
-}
-
-.Tag.Easy {
-  background-color: #7ED957;
+/* 난이도 표시 Tag */
+.Tag {
+  padding: 4px 8px;
+  border-radius: 12px;
   color: white;
-  padding: 2px 8px;
-  border-radius: 8px;
+  font-size: 12px;
 }
 
+.Easy {
+  background-color: #28a745;
+}
+
+.Medium {
+  background-color: #ffc107;
+}
+
+/* 날씨 섹션 */
 .WeatherSection {
-  margin-bottom: 1.5rem;
+  margin-top: 20px;
 }
 
 .WeatherTags {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 4px;
+  gap: 8px;
+  margin-top: 8px;
 }
 
 .WeatherTag {
-  background: #f1f1f1;
-  border-radius: 6px;
-  padding: 4px 8px;
-  font-size: 13px;
+  background: #eee;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
 }
 
-.WriteBtn {
-  background: #fffbe6;
-  border: 1px solid #ffce00;
-  color: #ff9900;
-  padding: 6px 10px;
-  border-radius: 10px;
-  font-weight: bold;
-  font-size: 14px;
-}
-
+/* 리뷰 섹션 */
 .ReviewSection {
-  margin-top: 1.5rem;
+  margin-top: 30px;
 }
 
-.SpeechBubble {
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 10px;
-  margin-top: 8px;
-  background: white;
-  position: relative;
+/* 리뷰 추가, 자세히 버튼 */
+.ReviewButtons {
+  display: flex;
+  align-items: center;
 }
 
-.SpeechBubble.CutText {
-  max-width: 240px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.MoreBtn {
-  background-color: #ff0;
-  border-radius: 4px;
-  padding: 0 4px;
-  margin-left: 8px;
+.MoreLink {
+  background: none;
+  border: none;
+  color: black;
+  font-size: 14px;
+  text-decoration: underline;
+  margin-right: 10px;
   cursor: pointer;
 }
 
-.SpeechPointer {
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 12px solid #ccc;
-  margin: 0 auto;
-  margin-top: 4px;
+/* 리뷰 말풍선 */
+.SpeechBubble {
+  background: #ffffff !important;
+  border: 0.1px solid #333;
+  padding: 10px 15px;
+  margin: 10px 0;
+  border-radius: 20px;
+  max-width: 100%;
+  word-break: break-word;
+}
+
+.CutText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 리뷰 작성 버튼 */
+.WriteBtn {
+  background: none;
+  border: none;
+  color: black;
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.WriteBtn:hover {
+  color: #490707; /* 마우스 오버시 살짝 진하게 */
+}
+
+/* 페이지네이션 Footer */
+.PaginationFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
 }

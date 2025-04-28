@@ -3,6 +3,9 @@
   height: 100vh;
   max-width: 1920px;
   max-height: 1080px; 
+  display: flex;  /* 한줄 정렬 */
+  align-items: center; /* 세로 정렬 */
+  flex-direction: column; /* 정렬방향 세로 */
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -16,6 +19,12 @@
 
 /* 곰 이미지 */
 .img {
+  height: auto;         /* 고정된 세로 해제 */
+  width: 600px;         /* 입력폼과 같은 너비 */
+  max-width: 100%;      /* 혹시 몰라서 화면 줄어들면 반응형도 됨 */
+  margin-top: 10px;
+  margin-bottom: 20px;
+  object-fit: contain;  /* 이미지 찌그러지지 않게 */
   width: auto;        
   height: 580px;        
   margin-top: 10px;
@@ -60,6 +69,8 @@ label {
   height: 36px;
   padding: 8px;
   font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
   
 }
 
@@ -75,6 +86,7 @@ input::placeholder {
   margin-top: 0px;
   background-color: green;
   color: white;
+  border: none !important; 
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -83,6 +95,24 @@ input::placeholder {
   align-items: center;
   padding: 0;  
   line-height: 1;
+}
+
+/* 주소 선택박스 */
+.address-select {
+  flex: 1;
+  height: 36px; /* input과 똑같이 맞추기 */
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box; 
+}
+
+/* 주소 선택박스 한줄로 */ 
+.address-row {
+  display: flex;
+  gap: 10px;  
+  width: 100%;
   font-weight: bold;
 }
 
@@ -96,14 +126,21 @@ input::placeholder {
 }
 
 /* 아래 버튼들 정렬 */
-.member button {
+.member-button {
+  display: flex;
+  justify-content: center; /* 중앙 정렬 */
+  gap: 12px;                /* 버튼 사이 간격 */
+  margin-top: 20px;
+}
+
+.member-button button{
   margin: 10px 8px;
   padding: 8px 16px;
-  font-size: 16px;
+  font-size: 20px;
   cursor: pointer;
   background-color: green;
   color: white;
   border: none;
   border-radius: 6px;
-  
 }
+

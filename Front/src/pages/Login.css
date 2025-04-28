@@ -1,9 +1,6 @@
 .login-box {
-  width: 100vw;
-  height: 100vh;
-  max-width: 1920px;
-  max-height: 1080px;
-
+  width: 550px;
+  height: 750px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -16,10 +13,11 @@
 }
 
 /* 곰 이미지 */
-.img {
-  width: 450px;        
-  height: auto;        
-  margin-top: 10px;
+.login-box img {
+  width: 300px;              /* 모달 내부 너비에 맞춤 */
+  height: 300px;             /* 비율 유지 */
+  object-fit: contain;      /* 이미지 비율 유지하면서 잘리지 않게 */
+  margin-top: 30px;
   margin-bottom: 20px;
 }
 
@@ -28,6 +26,7 @@
   display: flex;
   gap: 10px;
   align-items: stretch;
+  margin-top: 1px;
   margin-top: 20px;
 }
 
@@ -37,13 +36,14 @@
   flex-direction: column;
   gap: 10px;
   flex: 1;
-  width: 300px;
+  width: 200px;
   height: 50px;
 }
 
 /* 로그인 버튼 */
 .login-submit {
   width: 100px;
+  height: 80px;
   height: 70px;
   background-color: green;
   color: white;
@@ -82,4 +82,17 @@
 
 .divider {
   color: #ccc;
+}
+
+.login input {
+  height: 36px;
+  padding: 8px;
+  font-size: 16px; /* 입력한 글자 크기 */
+  border: 1px solid #ccc; /* 테두리 선 두께 및 색 */
+  border-radius: 6px;
+}
+
+/* placeholder 스타일 */
+.login input::placeholder {
+  font-size: 13px;   /* placeholder 글씨 크기 */
 }
