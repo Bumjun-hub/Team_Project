@@ -16,7 +16,7 @@ public class NationalParkOfficeService {
 	NationalParkOfficeRepository national_park_office_repository;
 	
 	public List<NationalParkOfficeDomain> get_all_list() {
-		return national_park_office_repository.findAll();
+		return national_park_office_repository.get_all_list();
 	}
 
 	public List<NationalParkOfficeDomain> get_list_national_park(Integer national_park_no) {

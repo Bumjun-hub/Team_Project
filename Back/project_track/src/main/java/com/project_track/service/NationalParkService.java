@@ -15,7 +15,7 @@ public class NationalParkService {
 	NationalParkRepository national_park_repository;
 	
 	public List<NationalParkDomain> get_all_list() {
-		return national_park_repository.findAll();
+		return national_park_repository.get_all_list();
 	}
 
 	public Optional<NationalParkDomain> get_one_object(Integer national_park_no) {

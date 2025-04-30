@@ -30,7 +30,7 @@ public class TrackController {
 	
 	@GetMapping("/get_all_list")
 	public List<TrackDomain> get_all_track_list(){
-		List<TrackDomain> result_list=track_service.get_all_track_list();
+		List<TrackDomain> result_list=track_service.get_all_list();
 		if(result_list!=null) {
 			return result_list;
 		}
@@ -43,9 +43,17 @@ public class TrackController {
 			return null;
 		}
 		List<NationalParkDomain> temp_list=national_park_service.get_all_list();
-		if(national_park_no<1||national_park_no>temp_list.size()) {
+		int count=0;
+		for(NationalParkDomain z:temp_list) {
+			if(z.getNational_park_no().equals(national_park_no)) {
+				count++;
+				break;
+			}
+		}
+		if(count!=1) {
 			return null;
 		}
+		
 		List<TrackDomain> result_list=track_service.get_list_national_park(national_park_no);
 		if(result_list!=null) {
 			return result_list;
@@ -58,7 +66,7 @@ public class TrackController {
 		if(track_no==null||national_park_no==null) {
 			return null;
 		}
-		List<TrackDomain> temp_all_list=track_service.get_all_track_list();
+		List<TrackDomain> temp_all_list=track_service.get_all_list();
 		int count=0;
 		for(TrackDomain z:temp_all_list) {
 			if(z.getTrack_no().equals(track_no)&&z.getNational_park_no().equals(national_park_no)) {
@@ -103,11 +111,8 @@ public class TrackController {
 		  ) {
 			return 1302;
 		}
-		List<NationalParkDomain> temp_list=national_park_service.get_all_list();
-		if(track_domain.getNational_park_no()<1||track_domain.getNational_park_no()>temp_list.size()) {
-			return 1112;
-		}
-		List<TrackDomain> temp_list_track=track_service.get_all_track_list();
+				
+		List<TrackDomain> temp_list_track=track_service.get_all_list();
 		int count=0;
 		for(TrackDomain z:temp_list_track) {
 			if(z.getTrack_no().equals(track_domain.getTrack_no())&&z.getNational_park_no().equals(track_domain.getNational_park_no())) {
@@ -131,7 +136,7 @@ public class TrackController {
 		if(track_domain.getTrack_no()==null||track_domain.getNational_park_no()==null) {
 			return 1900;
 		}
-		List<TrackDomain> temp_list=track_service.get_all_track_list();
+		List<TrackDomain> temp_list=track_service.get_all_list();
 		int count=0;
 		for(TrackDomain z:temp_list) {
 			if(z.getTrack_no().equals(track_domain.getTrack_no())&&z.getNational_park_no().equals(track_domain.getNational_park_no())) {
@@ -197,7 +202,7 @@ public class TrackController {
 		if(track_domain.getTrack_no()==null||track_domain.getNational_park_no()==null) {
 			return 1900;
 		}
-		List<TrackDomain> temp_list=track_service.get_all_track_list();
+		List<TrackDomain> temp_list=track_service.get_all_list();
 		int count=0;
 		for(TrackDomain z:temp_list) {
 			if(z.getTrack_no().equals(track_domain.getTrack_no())&&z.getNational_park_no().equals(track_domain.getNational_park_no())) {
