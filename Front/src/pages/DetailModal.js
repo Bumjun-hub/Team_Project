@@ -6,41 +6,14 @@ import imgMountain1 from "../sample_data/SampleMap1.png";
 import AddReviewComponent from "../components/review/Review";
 import NationalParkInfo from "./NationalParkInfo";
 import axios from 'axios';
+import { useCallback } from 'react';
 
-const courses = [
-    {
-        name: "코스1",
-        time: "1시간 30분",
-        distance: "5km",
-        altitude: "300m",
-        difficulty: "쉬움",
-        mapImage: imgMountain1,
-        reviews: [
-            "힘들어요 ….. ㅠㅠ 하지만 힘든만큼 보람이 있어요.",
-            "가족들이랑 같이 좋은 것 같아요 ~~"
-        ]
-    },
-    {
-        name: "코스2",
-        time: "2시간",
-        distance: "8km",
-        altitude: "500m",
-        difficulty: "보통",
-        mapImage: imgMountain1,
-        reviews: [
-            "힘들지만 정상에서 뷰가 미쳤어요!",
-            "커플끼리 가면 싸울수도..."
-        ]
-    },
-];
 
 const DetailModal = ({ show, onHide,showTab }) => {
 
     // 데이터 호출
-    const national_park_no =1;
-    const track_no = 2;
-
-    const [useCourseInfo, setCourseInfo] = useState({
+    const [useTrackInfo, setTrackInfo] = useState({
+        track_no: "",           // 트랙 번호
         track_name: "",         // 트랙명
         track_find: "",         // 트랙 네이버 길찾기 링크
         track_detail: "",       // 트랙 상세
@@ -49,17 +22,102 @@ const DetailModal = ({ show, onHide,showTab }) => {
         track_length: 0,        // 트랙길이(km)
         track_altitude: 0,      // 트랙 고도(m)
 
-        review_content: "",     // 코스 리뷰
+        allReviews: [],     // 코스 리뷰
     });
+
+    const national_park_no =1;
+    const track_no = 2;
+
+    const [courses, setCourse] = useState(
+        [
+            {
+                name: "코스1",
+                time: "1시간 30분",
+                distance: "5km",
+                altitude: "300m",
+                difficulty: "쉬움",
+                mapImage: imgMountain1,
+                reviews: [
+                    "힘들어요 ….. ㅠㅠ 하지만 힘든만큼 보람이 있어요.",
+                    "가족들이랑 같이 좋은 것 같아요 ~~"
+                ]
+            },
+            {
+                name: "코스2",
+                time: "2시간",
+                distance: "8km",
+                altitude: "500m",
+                difficulty: "보통",
+                mapImage: imgMountain1,
+                reviews: [
+                    "힘들지만 정상에서 뷰가 미쳤어요!",
+                    "커플끼리 가면 싸울수도..."
+                ]
+            },
+        ]);
+
+    useEffect(() => {
+        axios.get("/track/get_list_national_park", {params:{national_park_no}})
+        .then((result) => {
+            console.log(result.data);
+            const courses = result.data.map((item) => ({
+                name: item.track_name,
+                url: item.track_find,
+                time: `${item.track_time}시간`,
+                distance: `${item.track_length}km`,
+                altitude: `${item.track_altitude}m`,
+                difficulty: item.track_difficulty,
+                mapImage: imgMountain1,
+                reviews: [
+                    "힘들지만 정상에서 뷰가 미쳤어요!",
+                    "커플끼리 가면 싸울수도..."
+                ]
+            }) );
+            console.log(courses);
+            // name: "코스1",
+            // time: "1시간 30분",
+            // distance: "5km",
+            // altitude: "300m",
+            // difficulty: "쉬움",
+            // mapImage: imgMountain1,
+            // reviews: [
+            //     "힘들어요 ….. ㅠㅠ 하지만 힘든만큼 보람이 있어요.",
+            //     "가족들이랑 같이 좋은 것 같아요 ~~"
+            // ]
+        })
+    }, [])
 
     useEffect(() => {
         axios.get("/track/get_one_object", {params:{national_park_no: national_park_no, track_no: track_no}})
         .then((result) => {
+            const track_name = result.data.track_name;
+            const track_find = result.data.track_find;
+            const track_difficulty = result.data.track_difficulty;
+            const track_time = result.data.track_time;
+            const track_length = result.data.track_length;
+            const track_altitude = result.data.track_altitude;
+            setTrackInfo((prev) => ({
+                ...prev, track_name, track_find, track_difficulty, track_time, track_length, track_altitude
+            }))
         })
         .catch((error) => {
             console.error("데이터 호출 오류", error);
         });
-    })
+
+        axios.get("/review/get_list_track", {params:{national_park_no:national_park_no, track_no:track_no}})
+        .then((result) => {
+            const allReviews = result.data.map((item) => item.review_content);
+            console.log(allReviews);
+            setTrackInfo((prev) => ({
+                ...prev,
+                allReviews
+                
+            }));
+        })
+        .catch((error) => {
+            console.error("리뷰 호출 오류", error);
+        });
+    }, []);
 
     const [isExpanded, setIsExpanded] = useState(false);
     const [showAddReview, setShowAddReview] = useState(false);
