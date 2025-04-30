@@ -9,10 +9,13 @@ import JoinModal from "./join/JoinModal"
 import { FaUserPlus } from "react-icons/fa";
 import { MdLogin } from "react-icons/md";
 import { FaHome } from "react-icons/fa";
+import LoginInfo from "./join/LoginInfo";
 
 const Header = (() => {
     const [showModal, setShowModal] = useState(false);
     const [showLogin, setShowLogin] = useState(false); // 지영 로그인 모달 추가
+    const loginUserId = localStorage.getItem("loginUserId");
+
     return (
         <>
             <div className='HeadDiv'>
@@ -25,6 +28,8 @@ const Header = (() => {
 
                 <div className='RightDiv'>
                     <div className='Login'>
+                      {!loginUserId && (
+                        <>
                       {/* 지영 로그인 모달 */}
                       <button className="LoginButton" onClick={()=> setShowLogin(true)}>
                         <MdLogin className="MdLogin" />
@@ -36,6 +41,9 @@ const Header = (() => {
                       <Link to="/member" className="MemberButton">
                         <FaUserPlus className="FaUserPlus" />
                       </Link>
+                      </>
+                      )}
+                      <LoginInfo />
                     </div>
                 </div>
 

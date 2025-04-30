@@ -21,7 +21,9 @@ export const UseLogin = () => {
     })
       .then((result)=>{
         if (result.data === 1010) {
-        alert("로그인 성공");
+        localStorage.setItem("loginUserId", loginId);  
+        alert("로그인 성공");   
+        window.location.reload();     
       } else if (result.data === 1011) {
         alert("존재하지 않는 아이디입니다!");
       } else if (result.data === 1012) {
