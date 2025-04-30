@@ -3,13 +3,20 @@ import './NationalParkInfo.css';
 import imgMountain from "../sample_data/SampleMap1.png";
 import Weather from '../components/Weather';
 
-const NationalParkInfo = () => {
-    const allReviews = [
-        "힘들어요 ㅠㅠ",
-        "정말 멋진 풍경입니다!",
-        "코스가 잘 정비되어 있어요.",
-        "가족여행에 딱이에요."
-    ];
+
+
+const NationalParkInfo = ({national_park_no}) => {
+
+    const [useParkInfo, setParkInfo] = useState({
+        allReviews: [
+            "힘들어요 ㅠㅠ",
+            "정말 멋진 풍경입니다!",
+            "코스가 잘 정비되어 있어요.",
+            "가족여행에 딱이에요."
+        ],
+        location_x : "",
+        location_y : ""
+    })
 
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -35,13 +42,13 @@ const NationalParkInfo = () => {
                     <div className="WeatherSection">
                         <strong>날씨</strong>
                         <div className="WeatherTags">
-                            <Weather />                    
+                            {/* <Weather />                     */}
                         </div>
                     </div>
                     
                     <div className="ReviewSection">
                         <div className="CourseInfo">
-                        <strong>리뷰 ({allReviews.length})</strong>
+                        <strong>리뷰 ({useParkInfo.allReviews.length})</strong>
                         <div className="ReviewButtons">
                             <button className="MoreLink" onClick={toggleExpand}>
                             {isExpanded ? "접기" : "자세히"}
@@ -49,7 +56,7 @@ const NationalParkInfo = () => {
                         </div>
                         </div>
 
-                        {allReviews.map((text, idx) => (
+                        {useParkInfo.allReviews.map((text, idx) => (
                         <div key={idx} className={`SpeechBubble ${!isExpanded ? "CutText" : ""}`}>
                             {text}
                         </div>
