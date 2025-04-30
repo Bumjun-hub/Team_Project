@@ -144,3 +144,8 @@ input::placeholder {
   border-radius: 6px;
 }
 
+button:disabled {
+  background-color: grey;
+  cursor: not-allowed;
+  opacity: 0.6;
+}

@@ -11,7 +11,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
+
 @Entity(name="national_park")
+
+
 public class NationalParkDomain {
 	@Id
 	private Integer national_park_no;

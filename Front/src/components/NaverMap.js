@@ -9,6 +9,7 @@ const NaverMap = () => {
 
   // 초기 모달 상태
   const [showTab, setShowTab] = useState('course');
+  const [selectedInfo,setSelectedInfo] = useState({});
   useEffect(() => {
 
     // 트랙 마커 불러오기
@@ -74,6 +75,12 @@ const NaverMap = () => {
               map.morph(position, 12);
               setShowModal(true);
               setShowTab('park');
+              
+              setSelectedInfo({
+                national_park_no: item.national_park_no
+              })
+
+
               blueMarkers.forEach((m) => m.setAnimation(null));
               redMarkers.forEach((m) => m.setAnimation(null));
 
@@ -141,6 +148,12 @@ const NaverMap = () => {
               setShowModal(true);
               setShowTab('course');
 
+              setSelectedInfo({
+                national_park_no: item.national_park_no,
+                track_no : item.track_no
+              })
+
+
 
               if (marker.getAnimation() !== null) {
                 marker.setAnimation(null);
@@ -183,7 +196,8 @@ const NaverMap = () => {
     <>
       {showModal && (
         <DetailModal show={showModal} onHide={() => setShowModal(false)}
-          showTab={showTab} />
+          showTab={showTab} 
+          selectedInfo={selectedInfo}/>
       )}
 
       <div
