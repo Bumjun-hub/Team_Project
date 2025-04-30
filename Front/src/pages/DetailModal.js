@@ -5,7 +5,7 @@ import './DetailModal.css';
 import imgMountain1 from "../sample_data/SampleMap1.png";
 import AddReviewComponent from "../components/review/Review";
 import NationalParkInfo from "./NationalParkInfo";
-
+import axios from 'axios';
 
 const courses = [
     {
@@ -35,6 +35,49 @@ const courses = [
 ];
 
 const DetailModal = ({ show, onHide,showTab }) => {
+
+    // 데이터 호출
+    const national_park_no =1;
+    const track_no = 1;
+
+    const [useCourseInfo, setCourseInfo] = useState({
+        track_name: "",         // 트랙명
+        track_find: "",         // 트랙 네이버 길찾기 링크
+        track_detail: "",       // 트랙 상세
+        track_difficulty: "",   // 트랙난이도(쉬움,보통,어려움)
+        track_time: 0,          // 트랙소요시간(분)
+        track_length: 0,        // 트랙길이(km)
+        track_altitude: 0,      // 트랙 고도(m)
+
+        review_content: "",     // 코스 리뷰
+    });
+
+/*     useEffect(() => {
+        axios({
+            method: "get",
+            url: "/track/get_one_object",
+            params: {
+                national_park_no: national_park_no,
+                track_no: track_no
+            }
+        })
+        .then((result) => {
+            console.log(result.data)            
+        })
+        .catch((error) => {
+            console.error("데이터 호출 오류", error);
+        });
+    }) */
+    useEffect(() => {
+        axios.get("/track/get_one_object", {params:{national_park_no: national_park_no, track_no: track_no}})
+        .then((result) => {
+            console.log(result.data)            
+        })
+        .catch((error) => {
+            console.error("데이터 호출 오류", error);
+        });
+    })
+
     const [isExpanded, setIsExpanded] = useState(false);
     const [showAddReview, setShowAddReview] = useState(false);
     const [activeTab, setActiveTab] = useState(showTab || 'course');
