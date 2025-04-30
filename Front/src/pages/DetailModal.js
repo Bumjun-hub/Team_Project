@@ -52,26 +52,11 @@ const DetailModal = ({ show, onHide,showTab }) => {
         review_content: "",     // 코스 리뷰
     });
 
-/*     useEffect(() => {
-        axios({
-            method: "get",
-            url: "/track/get_one_object",
-            params: {
-                national_park_no: national_park_no,
-                track_no: track_no
-            }
-        })
-        .then((result) => {
-            console.log(result.data)            
-        })
-        .catch((error) => {
-            console.error("데이터 호출 오류", error);
-        });
-    }) */
     useEffect(() => {
         axios.get("/track/get_one_object", {params:{national_park_no: national_park_no, track_no: track_no}})
         .then((result) => {
-            console.log(result.data)            
+            console.log(result.data)
+            const tracK_name = result.data.track_name
         })
         .catch((error) => {
             console.error("데이터 호출 오류", error);
