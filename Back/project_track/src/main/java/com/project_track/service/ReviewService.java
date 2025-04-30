@@ -16,7 +16,7 @@ public class ReviewService {
 	ReviewRepository review_repository;
 
 	public List<ReviewDomain> get_all_list() {
-		return review_repository.findAll();
+		return review_repository.get_all_list();
 	}
 
 	public List<ReviewDomain> get_list_track(TrackId track_id) {

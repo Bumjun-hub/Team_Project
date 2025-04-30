@@ -43,7 +43,14 @@ public class NationalParkOfficeController {
 			return null;
 		}
 		List<NationalParkDomain> temp_list=national_park_service.get_all_list();
-		if(national_park_no<1||national_park_no>temp_list.size()) {
+		int count=0;
+		for(NationalParkDomain z:temp_list) {
+			if(z.getNational_park_no().equals(national_park_no)) {
+				count++;
+				break;
+			}
+		}
+		if(count!=1) {
 			return null;
 		}
 		List<NationalParkOfficeDomain> result_list=national_park_office_service.get_list_national_park(national_park_no);
@@ -58,7 +65,6 @@ public class NationalParkOfficeController {
 		if(national_park_no==null||national_park_office_no==null) {
 			return null;
 		}
-		
 		List<NationalParkOfficeDomain> temp_list=national_park_office_service.get_all_list();
 		int count=0;
 		for(NationalParkOfficeDomain z:temp_list) {
@@ -70,7 +76,6 @@ public class NationalParkOfficeController {
 		if(count!=1) {
 			return null;
 		}
-		
 		NationalParkOfficeId national_park_office_id=new NationalParkOfficeId();
 		national_park_office_id.setNational_park_no(national_park_no);
 		national_park_office_id.setNational_park_office_no(national_park_office_no);	
@@ -92,7 +97,6 @@ public class NationalParkOfficeController {
 		) {
 			return 1900;
 		}
-		
 		List<NationalParkOfficeDomain> temp_list_national_park_office=national_park_office_service.get_all_list();
 		int count=0;
 		for(NationalParkOfficeDomain z:temp_list_national_park_office) {
@@ -104,8 +108,6 @@ public class NationalParkOfficeController {
 		if(count==1) {
 			return 1202;
 		}
-		
-
 		NationalParkOfficeDomain result=national_park_office_service.add(national_park_office_domain);
 		if(result!=null) {
 			return 1200;
@@ -129,7 +131,6 @@ public class NationalParkOfficeController {
 		if(count!=1) {
 			return 1212;
 		}
-		
 		NationalParkOfficeId national_park_office_id=new NationalParkOfficeId();
 		national_park_office_id.setNational_park_office_no(national_park_office_domain.getNational_park_office_no());
 		national_park_office_id.setNational_park_no(national_park_office_domain.getNational_park_no());
@@ -170,11 +171,9 @@ public class NationalParkOfficeController {
 		if(count!=1) {
 			return 1212;
 		}
-		
 		NationalParkOfficeId national_park_office_id=new NationalParkOfficeId();
 		national_park_office_id.setNational_park_no(national_park_office_domain.getNational_park_no());
-		national_park_office_id.setNational_park_office_no(national_park_office_domain.getNational_park_office_no());
-				
+		national_park_office_id.setNational_park_office_no(national_park_office_domain.getNational_park_office_no());		
 		Optional<NationalParkOfficeDomain> result=national_park_office_service.delete(national_park_office_id);
 		if(result.isEmpty()) {
 			return 1220;
