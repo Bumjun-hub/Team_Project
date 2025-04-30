@@ -5,7 +5,7 @@ import './DetailModal.css';
 import imgMountain1 from "../sample_data/SampleMap1.png";
 import AddReviewComponent from "../components/review/Review";
 import NationalParkInfo from "./NationalParkInfo";
-import Weather from '../components/Weather';
+
 
 const courses = [
     {
@@ -151,13 +151,6 @@ const DetailModal = ({ show, onHide,showTab }) => {
                                         </tr>
                                     </tbody>
                                 </table>
-
-                                <div className="WeatherSection">
-                                    <strong>날씨</strong>
-                                    <div className="WeatherTags">
-                                        <Weather></Weather>
-                                    </div>
-                                </div>
 
                                 <div className="ReviewSection">
                                     <div className="CourseInfo">

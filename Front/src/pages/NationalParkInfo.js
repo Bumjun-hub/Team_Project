@@ -1,6 +1,7 @@
 import { useState } from "react";
 import './NationalParkInfo.css';
 import imgMountain from "../sample_data/SampleMap1.png";
+import Weather from '../components/Weather';
 
 const NationalParkInfo = () => {
     const allReviews = [
@@ -31,7 +32,13 @@ const NationalParkInfo = () => {
                     <div className="ParkContact">
                         강원도 설악산리 8842-1123  053)1111-1111
                     </div>
-
+                    <div className="WeatherSection">
+                        <strong>날씨</strong>
+                        <div className="WeatherTags">
+                            <Weather />                    
+                        </div>
+                    </div>
+                    
                     <div className="ReviewSection">
                         <div className="CourseInfo">
                         <strong>리뷰 ({allReviews.length})</strong>
