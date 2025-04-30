@@ -64,12 +64,13 @@ public class MemberController {
 		if(result.isPresent()) {
 			MemberDomain result_member=result.get();
 			boolean result_flag=password_encoder.matches(member_password, result_member.getMember_password());
-			if(!result_flag) {
-				return 1012;
+			if(result_flag) {
+				return 1010;
 			}
-			return 1010;
+			return 1012;
+		}else {
+			return 1032;
 		}
-		return 1011;
 	}
 	
 	@PutMapping("/modify")
@@ -134,6 +135,10 @@ public class MemberController {
 	public int delete_member(@RequestBody MemberDomain member_domain) {
 		if(!StringUtils.hasText(member_domain.getMember_id())) {
 			return 1900;
+		}
+		Optional<MemberDomain> result_optional=member_service.id_check(member_domain.getMember_id());
+		if(result_optional.isEmpty()) {
+			return 1032;
 		}
 		Optional<MemberDomain> result=member_service.withdraw(member_domain.getMember_id());
 		if(result.isEmpty()) {

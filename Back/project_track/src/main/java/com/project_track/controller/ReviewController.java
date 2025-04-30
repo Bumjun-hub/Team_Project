@@ -13,15 +13,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project_track.domain.MemberDomain;
+import com.project_track.domain.NationalParkDomain;
 import com.project_track.domain.ReviewDomain;
+import com.project_track.domain.TrackDomain;
 import com.project_track.id.TrackId;
+import com.project_track.service.MemberService;
+import com.project_track.service.NationalParkService;
 import com.project_track.service.ReviewService;
+import com.project_track.service.TrackService;
 
 @RestController
 @RequestMapping("/review")
 public class ReviewController {
 	@Autowired
 	ReviewService review_service;
+	@Autowired
+	TrackService track_service;
+	@Autowired
+	MemberService member_service;
+	@Autowired
+	NationalParkService national_park_service;
 	
 	@GetMapping("/get_all_list")
 	public List<ReviewDomain> get_all_list(){
@@ -35,6 +47,17 @@ public class ReviewController {
 	@GetMapping("/get_list_track")
 	public List<ReviewDomain> get_list_track(@RequestParam("track_no") Integer track_no, @RequestParam("national_park_no") Integer national_park_no){
 		if(track_no==null||national_park_no==null) {
+			return null;
+		}
+		List<TrackDomain> temp_list_track=track_service.get_all_list();
+		int count=0;
+		for(TrackDomain z:temp_list_track) {
+			if(z.getTrack_no().equals(track_no)&&z.getNational_park_no().equals(national_park_no)) {
+				count++;
+				break;
+			}
+		}
+		if(count!=1) {
 			return null;
 		}
 		TrackId track_id=new TrackId();
@@ -52,6 +75,10 @@ public class ReviewController {
 		if(member_id==null) {
 			return null;
 		}
+		Optional<MemberDomain> temp_optional=member_service.id_check(member_id);
+		if(temp_optional.isEmpty()) {
+			return null;
+		}
 		List<ReviewDomain> result_list=review_service.get_list_member(member_id);
 		if(result_list!=null) {
 			return result_list;
@@ -62,6 +89,17 @@ public class ReviewController {
 	@GetMapping("/get_list_national_park")
 	public List<ReviewDomain> get_list_national_park(@RequestParam("national_park_no") Integer national_park_no){
 		if(national_park_no==null) {
+			return null;
+		}
+		List<NationalParkDomain> temp_list=national_park_service.get_all_list();
+		int count=0;
+		for(NationalParkDomain z:temp_list) {
+			if(z.getNational_park_no().equals(national_park_no)) {
+				count++;
+				break;
+			}
+		}
+		if(count!=1) {
 			return null;
 		}
 		List<ReviewDomain> result_list=review_service.get_list_national_park(national_park_no);
@@ -88,130 +126,21 @@ public class ReviewController {
 		if(review_domain.getMember_id()==null||review_domain.getTrack_no()==null||review_domain.getNational_park_no()==null||review_domain.getReview_content()==null) {
 			return 1900;
 		}
-		switch(review_domain.getNational_park_no()) {
-			case 1:
-				if(review_domain.getTrack_no()>=1&&review_domain.getTrack_no()<=7) {
-					break;
-				}else {
-					return 1402;
-				}
-			case 2:
-				if(review_domain.getTrack_no()>=1&&review_domain.getTrack_no()<=7) {
-					break;
-				}else {
-					return 1402;
-				}
-			case 3:
-				if(review_domain.getTrack_no()>=1&&review_domain.getTrack_no()<=9) {
-					break;
-				}else {
-					return 1402;
-				}
-			case 4:
-				if(review_domain.getTrack_no()>=1&&review_domain.getTrack_no()<=10) {
-					break;
-				}else {
-					return 1402;
-				}
-			case 5:
-				if(review_domain.getTrack_no()>=1&&review_domain.getTrack_no()<=13) {
-					break;
-				}else {
-					return 1402;
-				}
-			case 6:
-				if(review_domain.getTrack_no()>=1&&review_domain.getTrack_no()<=8) {
-					break;
-				}else {
-					return 1402;
-				}
-			case 7:
-				if(review_domain.getTrack_no()>=1&&review_domain.getTrack_no()<=8) {
-					break;
-				}else {
-					return 1402;
-				}
-			case 8:
-				if(review_domain.getTrack_no()>=1&&review_domain.getTrack_no()<=8) {
-					break;
-				}else {
-					return 1402;
-				}
-			case 9:
-				if(review_domain.getTrack_no()>=1&&review_domain.getTrack_no()<=14) {
-					break;
-				}else {
-					return 1402;
-				}
-			case 10:
-				if(review_domain.getTrack_no()>=1&&review_domain.getTrack_no()<=7) {
-					break;
-				}else {
-					return 1402;
-				}
-			case 11:
-				if(review_domain.getTrack_no()>=1&&review_domain.getTrack_no()<=18) {
-					break;
-				}else {
-					return 1402;
-				}
-			case 12:
-				if(review_domain.getTrack_no()>=1&&review_domain.getTrack_no()<=8) {
-					break;
-				}else {
-					return 1402;
-				}
-			case 13:
-				if(review_domain.getTrack_no()>=1&&review_domain.getTrack_no()<=13) {
-					break;
-				}else {
-					return 1402;
-				}
-			case 14:
-				if(review_domain.getTrack_no()>=1&&review_domain.getTrack_no()<=6) {
-					break;
-				}else {
-					return 1402;
-				}
-			case 15:
-				if(review_domain.getTrack_no()>=1&&review_domain.getTrack_no()<=7) {
-					break;
-				}else {
-					return 1402;
-				}
-			case 16:
-				if(review_domain.getTrack_no()>=1&&review_domain.getTrack_no()<=16) {
-					break;
-				}else {
-					return 1402;
-				}
-			case 17:
-				if(review_domain.getTrack_no()>=1&&review_domain.getTrack_no()<=11) {
-					break;
-				}else {
-					return 1402;
-				}
-			case 18:
-				if(review_domain.getTrack_no()>=1&&review_domain.getTrack_no()<=4) {
-					break;
-				}else {
-					return 1402;
-				}
-			case 19:
-				if(review_domain.getTrack_no()>=1&&review_domain.getTrack_no()<=2) {
-					break;
-				}else {
-					return 1402;
-				}
-			case 20:
-				if(review_domain.getTrack_no()>=1&&review_domain.getTrack_no()<=7) {
-					break;
-				}else {
-					return 1402;
-				}
-			default:
-				return 1403;
+		List<TrackDomain> temp_list_track=track_service.get_all_list();
+		int count=0;
+		for(TrackDomain z:temp_list_track) {
+			if(z.getTrack_no().equals(review_domain.getTrack_no())&&z.getNational_park_no().equals(review_domain.getNational_park_no())) {
+				count++;
+				break;
+			}
 		}
+		if(count!=1) {
+			return 1402;
+		}
+		Optional<MemberDomain> temp_optional=member_service.id_check(review_domain.getMember_id());
+		if(temp_optional.isEmpty()) {
+			return 1403;
+		}	
 		ReviewDomain result_review=review_service.add(review_domain);
 		if(result_review!=null) {
 			return 1400;
@@ -235,10 +164,10 @@ public class ReviewController {
 			review_domain.setNational_park_no(temp.getNational_park_no());
 			review_domain.setReview_created_date(temp.getReview_created_date());
 			ReviewDomain result_review=review_service.modify(review_domain);
-			if(result_review==null) {
-				return 1411;
+			if(result_review!=null) {
+				return 1410;
 			}
-			return 1410;
+			return 1411;
 		}else {
 			return 1412;
 		}
@@ -246,6 +175,20 @@ public class ReviewController {
 	
 	@DeleteMapping("/delete")
 	public int delete(@RequestBody ReviewDomain review_domain) {
+		if(review_domain.getReview_no()==null) {
+			return 1900;
+		}
+		List<ReviewDomain> temp_list=review_service.get_all_list();
+		int count=0;
+		for(ReviewDomain z:temp_list) {
+			if(z.getReview_no().equals(review_domain.getReview_no())) {
+				count++;
+				break;
+			}
+		}
+		if(count!=1) {
+			return 1412;
+		}
 		Optional<ReviewDomain> result_review=review_service.delete(review_domain.getReview_no());
 		if(result_review.isEmpty()) {
 			return 1420;

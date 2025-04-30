@@ -34,15 +34,22 @@ public class NationalParkController {
 	
 	@GetMapping("/get_one_object")
 	public NationalParkDomain get_one_object(@RequestParam("national_park_no") Integer national_park_no) {
+		if(national_park_no==null) {
+			return null;
+		}
 		List<NationalParkDomain> temp_list=national_park_service.get_all_list();
-		if(national_park_no!=null) {
-			if(national_park_no<1||national_park_no>temp_list.size()) {
-				return null;
+		int count=0;
+		for(NationalParkDomain z:temp_list) {
+			if(z.getNational_park_no().equals(national_park_no)) {
+				count++;
+				break;
 			}
-			Optional<NationalParkDomain> result=national_park_service.get_one_object(national_park_no);
-			if(result.isEmpty()) {
-				return null;
-			}
+		}
+		if(count!=1) {
+			return null;
+		}
+		Optional<NationalParkDomain> result=national_park_service.get_one_object(national_park_no);
+		if(result.isPresent()) {
 			return result.get();
 		}
 		return null;
@@ -64,7 +71,14 @@ public class NationalParkController {
 			return 1900;
 		}
 		List<NationalParkDomain> temp_list=national_park_service.get_all_list();
-		if(national_park_domain.getNational_park_no()>=1&&national_park_domain.getNational_park_no()<=temp_list.size()) {
+		int count=0;
+		for(NationalParkDomain z:temp_list) {
+			if(z.getNational_park_no().equals(national_park_domain.getNational_park_no())) {
+				count++;
+				break;
+			}
+		}
+		if(count==1) {
 			return 1102;
 		}
 		NationalParkDomain result_national_park=national_park_service.add(national_park_domain);
@@ -80,7 +94,14 @@ public class NationalParkController {
 			return 1900;
 		}
 		List<NationalParkDomain> temp_list=national_park_service.get_all_list();
-		if(national_park_domain.getNational_park_no()<1||national_park_domain.getNational_park_no()>temp_list.size()) {
+		int count=0;
+		for(NationalParkDomain z:temp_list) {
+			if(z.getNational_park_no().equals(national_park_domain.getNational_park_no())) {
+				count++;
+				break;
+			}
+		}
+		if(count!=1) {
 			return 1112;
 		}
 		Optional<NationalParkDomain> result_optional_national_park=national_park_service.get_one_object(national_park_domain.getNational_park_no());
@@ -126,7 +147,14 @@ public class NationalParkController {
 			return 1900;
 		}
 		List<NationalParkDomain> temp_list=national_park_service.get_all_list();
-		if(national_park_domain.getNational_park_no()<1||national_park_domain.getNational_park_no()>temp_list.size()) {
+		int count=0;
+		for(NationalParkDomain z:temp_list) {
+			if(z.getNational_park_no().equals(national_park_domain.getNational_park_no())) {
+				count++;
+				break;
+			}
+		}
+		if(count!=1) {
 			return 1112;
 		}
 		Optional<NationalParkDomain> result_national_park=national_park_service.delete(national_park_domain.getNational_park_no());

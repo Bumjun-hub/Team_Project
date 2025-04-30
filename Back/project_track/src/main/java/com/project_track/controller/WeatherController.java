@@ -37,7 +37,18 @@ public class WeatherController {
 	
 	@GetMapping("/get_one_object_national_park_no")
 	public WeatherDomain get_one_object_national_park_no(@RequestParam("national_park_no") Integer national_park_no) {
-		if(national_park_no==null||national_park_no<1||national_park_no>20) {
+		if(national_park_no==null) {
+			return null;
+		}
+		List<NationalParkDomain> temp_list=national_park_service.get_all_list();
+		int count=0;
+		for(NationalParkDomain z:temp_list) {
+			if(z.getNational_park_no().equals(national_park_no)) {
+				count++;
+				break;
+			}
+		}
+		if(count!=1) {
 			return null;
 		}
 		WeatherDomain result_weather=weather_service.get_one_object_national_park_no(national_park_no);
@@ -53,9 +64,17 @@ public class WeatherController {
 			return null;
 		}
 		List<WeatherDomain> temp_list=weather_service.get_all_list();
-		if(weather_no<1||weather_no>temp_list.size()) {
+		int count=0;
+		for(WeatherDomain z:temp_list) {
+			if(z.getWeather_no().equals(weather_no)) {
+				count++;
+				break;
+			}
+		}
+		if(count!=1) {
 			return null;
 		}
+		
 		Optional<WeatherDomain> result_optional=weather_service.get_one_object(weather_no);
 		if(result_optional.isPresent()) {
 			return result_optional.get();
@@ -74,13 +93,20 @@ public class WeatherController {
 			return 1900;
 		}
 		List<NationalParkDomain> temp_list=national_park_service.get_all_list();
-		if(weather_domain.getNational_park_no()<1||weather_domain.getNational_park_no()>temp_list.size()) {
+		int count1=0;
+		for(NationalParkDomain z:temp_list) {
+			if(z.getNational_park_no().equals(weather_domain.getNational_park_no())) {
+				count1++;
+				break;
+			}
+		}
+		if(count1!=1) {
 			return 1112;
 		}
 		List<WeatherDomain> temp_list_weather=weather_service.get_all_list();
 		int count=0;
 		for(WeatherDomain z:temp_list_weather) {
-			if(z.getNational_park_no().equals(weather_domain.getNational_park_no())&&z.getWeather_no().equals(weather_domain.getWeather_no())) {
+			if(z.getWeather_no().equals(weather_domain.getWeather_no())) {
 				count++;
 				break;
 			}
@@ -97,14 +123,10 @@ public class WeatherController {
 	
 	@PutMapping("/modify")
 	public int modify(@RequestBody WeatherDomain weather_domain) {
-		if(weather_domain.getNational_park_no()==null||weather_domain.getWeather_no()==null) {
+		if(weather_domain.getWeather_no()==null) {
 			return 1900;
 		}
-		List<NationalParkDomain> temp_list=national_park_service.get_all_list();
-		if(weather_domain.getNational_park_no()<1||weather_domain.getNational_park_no()>temp_list.size()) {
-			return 1112;
-		}	
-		
+						
 		List<WeatherDomain> temp_list_weather=weather_service.get_all_list();
 		int count=0;
 		for(WeatherDomain z:temp_list_weather) {
@@ -116,9 +138,25 @@ public class WeatherController {
 		if(count!=1) {
 			return 1512;
 		}
+		
 		Optional<WeatherDomain> result_optional=weather_service.get_one_object(weather_domain.getWeather_no());
 		if(result_optional.isPresent()) {
 			WeatherDomain result=result_optional.get();
+			if(weather_domain.getNational_park_no()==null) {
+				weather_domain.setNational_park_no(result.getNational_park_no());
+			}else {
+				List<NationalParkDomain> temp_list=national_park_service.get_all_list();
+				int count1=0;
+				for(NationalParkDomain z:temp_list) {
+					if(z.getNational_park_no().equals(weather_domain.getNational_park_no())) {
+						count1++;
+						break;
+					}
+				}
+				if(count1!=1) {
+					return 1112;
+				}
+			}	
 			if(weather_domain.getWeather_location_x()==null) {
 				weather_domain.setWeather_location_x(result.getWeather_location_x());
 			}
