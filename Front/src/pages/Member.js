@@ -7,6 +7,8 @@ import { UseMember } from "../components/join/UseMember";
 const Member = () => {
     const {
         id, setId,
+        idError, setIdError,
+        idCheck, setIdCheck,
         password, setPassword,
         passwordConfirm, setPasswordConfirm,
         passwordError, setPasswordError,
@@ -14,11 +16,14 @@ const Member = () => {
         selectedCity, setSelectedCity,
         selectedDistrict, setSelectedDistrict,
         phone, setPhone,
+        phoneError, setPhoneError,
         emailId, setEmailId,
         domain, setDomain,
         selfDomain, setSelfDomain,
         selectSelfDomain, setSelectSelfDomain,
         handleSubmit,
+        handleCheckId,
+        memberFormValid
     } = UseMember();
 
     return (
@@ -38,16 +43,31 @@ const Member = () => {
 
                 {/* input */} 
                 <div className="join-input">
-                <label>* 아이디</label>
+                <label>* 아이디 (영문, 숫자만 가능)</label>
                     <div className="id-check-row">
                         <input
                             type="text"
                             placeholder="사용하고자 하는 아이디 입력"
                             value={id}
-                            onChange={(e) => setId(e.target.value)}
-                            required /> 
-                        <input type="submit" value="중복확인" className="double-id" /> 
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                const regex = /^[A-Za-z0-9]+$/;
+                                    if (value === "" || regex.test(value)){
+                                        setId(value);
+                                        setIdError(false);
+                                    } else {
+                                        setIdError(true);
+                                    }
+                                }}
+                            required />                     
+                        <button type="button" onClick={handleCheckId} className="double-id">중복확인</button>                      
                     </div>
+
+                    {idError && (
+                            <div style={{ color: "red", fontSize: "12px", marginTop: "4px" }}>
+                                아이디는 영문과 숫자만 입력 가능합니다
+                            </div>
+                    )}
 
                     <label>* 비밀번호</label>
                     <input
@@ -109,13 +129,28 @@ const Member = () => {
                         </select>
                     </div>
 
-                    <label>* 전화번호</label>
+                    <label>전화번호 (선택 : 숫자만 입력가능)</label>
                     <input
                         type="text"
                         placeholder="전화번호 입력"
                         value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        required /> 
+                        onChange={(e) => {
+                            const value = e.target.value
+                            const regex = /^[0-9]+$/;
+                                if (value === "" || regex.test(value)){
+                                    setPhone(value);
+                                    setPhoneError(false);
+                                } else {
+                                    setPhoneError(true);
+                                }
+                                }}
+                        required />
+
+                    {phoneError && (
+                            <div style={{ color: "red", fontSize: "12px", marginTop: "4px" }}>
+                                숫자만 입력 가능합니다
+                            </div>
+                    )}
 
                     <label>* 이메일</label>
                         <div className="email-box">
@@ -161,7 +196,7 @@ const Member = () => {
                 <Link to="/">
                     <button>취소</button>    
                 </Link>
-                    <button onClick={handleSubmit}>회원가입</button>
+                    <button onClick={handleSubmit} disabled={!memberFormValid}>회원가입</button>
             </div>
         </div>
         </>

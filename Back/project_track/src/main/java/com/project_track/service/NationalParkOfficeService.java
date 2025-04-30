@@ -26,5 +26,18 @@ public class NationalParkOfficeService {
 	public Optional<NationalParkOfficeDomain> get_one_object(NationalParkOfficeId national_park_office_id) {
 		return national_park_office_repository.findById(national_park_office_id);
 	}
+
+	public NationalParkOfficeDomain add(NationalParkOfficeDomain national_park_office_domain) {
+		return national_park_office_repository.save(national_park_office_domain);
+	}
+
+	public NationalParkOfficeDomain modify(NationalParkOfficeDomain national_park_office_domain) {
+		return national_park_office_repository.save(national_park_office_domain);
+	}
+
+	public Optional<NationalParkOfficeDomain> delete(NationalParkOfficeId national_park_office_id) {
+		national_park_office_repository.deleteById(national_park_office_id);
+		return national_park_office_repository.findById(national_park_office_id);
+	}
 	
 }
