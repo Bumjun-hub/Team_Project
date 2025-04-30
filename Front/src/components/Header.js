@@ -17,7 +17,7 @@ const Header = (() => {
     const loginUserId = localStorage.getItem("loginUserId");
 
     return (
-        <>
+        <div className='Header'>
             <div className='HeadDiv'>
                 <div className='LeftDiv'></div>
                 <div className='CenterDiv'>
@@ -25,7 +25,7 @@ const Header = (() => {
                         <FaHome className='FaHome' />
                     </Link>
                 </div>
-
+                
                 <div className='RightDiv'>
                     <div className='Login'>
                       {!loginUserId && (
@@ -48,10 +48,11 @@ const Header = (() => {
                 </div>
 
                 {/* <Button className='ModalButton' variant="primary" onClick={(DetailModal) => setShowModal(true)}> 디테일 모달 </Button> */}
-                <DetailModal show={showModal} onHide={() => setShowModal(false)} />
+                {/* <DetailModal show={showModal} onHide={() => setShowModal(false)} /> */}
+
             </div>
 
-        </>
+        </div>
     )
 })
 export default Header;

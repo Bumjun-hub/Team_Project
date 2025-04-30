@@ -5,6 +5,7 @@ import './DetailModal.css';
 import imgMountain1 from "../sample_data/SampleMap1.png";
 import AddReviewComponent from "../components/review/Review";
 import NationalParkInfo from "./NationalParkInfo";
+import Weather from '../components/Weather';
 
 const courses = [
     {
@@ -154,9 +155,7 @@ const DetailModal = ({ show, onHide,showTab }) => {
                                 <div className="WeatherSection">
                                     <strong>날씨</strong>
                                     <div className="WeatherTags">
-                                        {['4/13 ☀️', '4/14 ☀️', '4/15 ☀️', '4/16 ☀️', '4/17 ☀️'].map((w, i) => (
-                                            <span key={i} className="WeatherTag">{w}</span>
-                                        ))}
+                                        <Weather></Weather>
                                     </div>
                                 </div>
 
