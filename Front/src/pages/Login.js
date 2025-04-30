@@ -51,8 +51,6 @@ const Login = ({onClose}) => {
         {/* 회원가입, 관리자 */ }
             <div className="login-etc">
                 <Link to="/Member" className="link-text" onClick={onClose}>회원가입</Link>
-                <span className="divider">|</span>
-                <Link to="/Admin" className="link-text">관리자페이지</Link> 
             </div>
         
         </div>

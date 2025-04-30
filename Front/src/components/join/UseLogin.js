@@ -23,7 +23,11 @@ export const UseLogin = () => {
         if (result.data === 1010) {
         localStorage.setItem("loginUserId", loginId);  
         alert("로그인 성공");   
-        window.location.reload();     
+          if (loginId === "admin") {
+            window.location.href = "/admin";
+          } else {
+            window.location.reload();  
+          }           
       } else if (result.data === 1011) {
         alert("존재하지 않는 아이디입니다!");
       } else if (result.data === 1012) {
