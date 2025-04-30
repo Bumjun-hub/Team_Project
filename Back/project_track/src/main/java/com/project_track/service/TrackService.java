@@ -26,6 +26,19 @@ public class TrackService {
 	public Optional<TrackDomain> get_one_object(TrackId track_id) {
 		return track_repository.findById(track_id);
 	}
+
+	public TrackDomain add(TrackDomain track_domain) {
+		return track_repository.save(track_domain);
+	}
+
+	public TrackDomain modify(TrackDomain track_domain) {
+		return track_repository.save(track_domain);
+	}
+
+	public Optional<TrackDomain> delete(TrackId track_id) {
+		track_repository.deleteById(track_id);
+		return track_repository.findById(track_id);
+	}
 	
 
 }

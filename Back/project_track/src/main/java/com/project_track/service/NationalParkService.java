@@ -22,4 +22,17 @@ public class NationalParkService {
 		return national_park_repository.findById(national_park_no);
 	}
 
+	public NationalParkDomain add(NationalParkDomain national_park_domain) {
+		return national_park_repository.save(national_park_domain);
+	}
+
+	public NationalParkDomain modify(NationalParkDomain national_park_domain) {
+		return national_park_repository.save(national_park_domain);
+	}
+
+	public Optional<NationalParkDomain> delete(Integer national_park_no) {
+		national_park_repository.deleteById(national_park_no);
+		return national_park_repository.findById(national_park_no);
+	}
+
 }
