@@ -3,6 +3,8 @@ import "./Sidebar.css";
 import Search from "./search/Search";
 import SearchList from "./search/SearchList";
 
+
+
 export default function SideBar() {
     const [open, setOpen] = useState(false);
 
