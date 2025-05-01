@@ -50,12 +50,16 @@ const NaverMap = () => {
             const name = item.national_park_name;
             const position = new window.naver.maps.LatLng(item.national_park_latitude, item.national_park_longitude);
 
+            
             const marker = new window.naver.maps.Marker({
               position,
               map,
-              title: name,
+              title: name
             });
 
+            
+            
+            
             blueMarkers.push(marker);
 
 

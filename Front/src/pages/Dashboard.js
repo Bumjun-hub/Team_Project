@@ -244,7 +244,7 @@ const Dashboard = () => {
         backgroundColor: '#343a40',
         color: 'white'
       }}>
-        <h2 style={{ margin: 0}}>관리자 페이지</h2>
+        <h2 style={{ margin: 0, textAlign:'center'}}>관리자 페이지</h2>
         <button
           onClick={() => window.location.href = '/'}
           style={{
