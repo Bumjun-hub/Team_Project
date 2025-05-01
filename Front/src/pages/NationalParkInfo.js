@@ -120,7 +120,7 @@ const NationalParkInfo = () => {
                         <strong>날씨</strong>
                         <div className="WeatherTags">
                             {/* weather: {useParkInfo.location_x}, {useParkInfo.location_y} */}
-                            {/* <Weather location_x={useParkInfo.location_x} location_y={useParkInfo.location_y} /> */}
+                            <Weather location_x={useParkInfo.location_x} location_y={useParkInfo.location_y} />
                         </div>
                     </div>
                     

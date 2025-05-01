@@ -3,6 +3,7 @@ import { use, useEffect, useState } from "react";
 function Weather({location_x, location_y}){
     let [weather_list, set_weather_list]=useState([{}]);
     useEffect(()=>{
+        console.log(location_x)
         const today=new Date();
         let current_date=""+today.getFullYear();
         if(today.getMonth()+1<=9){
@@ -62,8 +63,8 @@ function Weather({location_x, location_y}){
         queryParams += '&' + encodeURIComponent('dataType') + '=' + encodeURIComponent('JSON'); /**/
         queryParams += '&' + encodeURIComponent('base_date') + '=' + encodeURIComponent(current_date); /**/
         queryParams += '&' + encodeURIComponent('base_time') + '=' + encodeURIComponent(current_time); /**/
-        queryParams += '&' + encodeURIComponent('nx') + '=' + encodeURIComponent('55'); /**/
-        queryParams += '&' + encodeURIComponent('ny') + '=' + encodeURIComponent('127'); /**/
+        queryParams += '&' + encodeURIComponent('nx') + '=' + encodeURIComponent(location_x); /**/
+        queryParams += '&' + encodeURIComponent('ny') + '=' + encodeURIComponent(location_y); /**/
         
         xhr.open('GET', url + queryParams);
         xhr.onreadystatechange = function () {
