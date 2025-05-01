@@ -60,11 +60,11 @@ const DetailModal = ({ show, onHide,showTab, props}) => {
         });
     }, []);
 
-    useEffect((allReviews) => {
+    useEffect(() => {
         axios.get("/track/get_list_national_park", {params:{national_park_no}})
         .then((result) => {
             console.log(result.data);
-            const courses = result.data.map((item, idx) => ({
+            const courses = result.data.map((item) => ({
                 name: item.track_name,
                 url: item.track_find,
                 time: `${item.track_time}시간`,
@@ -72,7 +72,7 @@ const DetailModal = ({ show, onHide,showTab, props}) => {
                 altitude: `${item.track_altitude}m`,
                 difficulty: item.track_difficulty,
                 mapImage: imgMountain1,
-                reviews: [allReviews[idx]]
+                reviews: []
             }) );
             console.log(courses);
             setCourse(courses);
