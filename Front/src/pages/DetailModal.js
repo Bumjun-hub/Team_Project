@@ -5,36 +5,92 @@ import './DetailModal.css';
 import imgMountain1 from "../sample_data/SampleMap1.png";
 import AddReviewComponent from "../components/review/Review";
 import NationalParkInfo from "./NationalParkInfo";
-import Weather from '../components/Weather';
+import axios from 'axios';
 
-const courses = [
-    {
-        name: "코스1",
-        time: "1시간 30분",
-        distance: "5km",
-        altitude: "300m",
-        difficulty: "쉬움",
-        mapImage: imgMountain1,
-        reviews: [
-            "힘들어요 ….. ㅠㅠ 하지만 힘든만큼 보람이 있어요.",
-            "가족들이랑 같이 좋은 것 같아요 ~~"
-        ]
-    },
-    {
-        name: "코스2",
-        time: "2시간",
-        distance: "8km",
-        altitude: "500m",
-        difficulty: "보통",
-        mapImage: imgMountain1,
-        reviews: [
-            "힘들지만 정상에서 뷰가 미쳤어요!",
-            "커플끼리 가면 싸울수도..."
-        ]
-    },
-];
 
-const DetailModal = ({ show, onHide,showTab }) => {
+
+const DetailModal = ({ show, onHide,showTab}) => {
+
+    // 시간 변환 함수
+    const formatTime = (totalMinutes) => {
+        const hours = Math.floor(totalMinutes / 60);
+        const minutes = totalMinutes % 60;
+        if (hours > 0 && minutes > 0) {
+            return `${hours}시간 ${minutes}분`;
+        } else if (hours > 0) {
+            return `${hours}시간`;
+        } else {
+            return `${minutes}분`;
+        }
+    };
+    // 고도 변환 함수
+    const formatAltitude = (altitude) => {
+        if (altitude >= 1000) {
+            return `${(altitude / 1000).toFixed(2)}km`;
+        } else {
+            return `${altitude}m`;
+        }
+    };
+
+    const national_park_no =1;
+    const track_no = 2;
+    
+    const [courses, setCourse] = useState(
+        [{name: "",url: "" , national_park_no:"", track_no:"", time: "", distance: "", altitude: "", difficulty: "", mapImage: imgMountain1, reviews: []}]);
+
+    useEffect(() => {
+        const fetchCoursesAndReviews = async () => {
+            try {
+                // 1. 코스(트랙) 정보 가져오기
+                const courseRes = await axios.get("/track/get_list_national_park", {
+                    params: { national_park_no }
+                });
+                const rawCourses = courseRes.data;
+    
+                // 2. 모든 트랙 번호 추출
+                const trackNos = rawCourses.map((course) => course.track_no);
+    
+                // 3. 각 track_no에 대해 개별 리뷰 요청
+                const reviewPromises = trackNos.map((trackNo) =>
+                    axios.get("/review/get_list_track", {
+                        params: { national_park_no, track_no: trackNo }
+                    }).then(res => ({
+                        track_no: trackNo,
+                        reviews: res.data.map((r) => r.review_content)
+                    }))
+                );
+    
+                const allReviewData = await Promise.all(reviewPromises);
+    
+                // 4. 리뷰를 track_no 기준으로 정리
+                const reviewMap = allReviewData.reduce((acc, { track_no, reviews }) => {
+                    acc[track_no] = reviews;
+                    return acc;
+                }, {});
+    
+                // 5. 최종 코스 데이터 구성
+                const updatedCourses = rawCourses.map((item) => ({
+                    name: item.track_name,
+                    track_no: item.track_no,
+                    url: item.track_find,
+                    national_park_no: item.national_park_no,
+                    time: formatTime(item.track_time),
+                    distance: `${item.track_length}km`,
+                    altitude: formatAltitude(item.track_altitude),
+                    difficulty: item.track_difficulty,
+                    mapImage: imgMountain1,
+                    reviews: reviewMap[item.track_no] || [] // 매칭된 리뷰 삽입
+                }));
+    
+                setCourse(updatedCourses);
+            } catch (error) {
+                console.error("데이터 호출 오류", error.response?.data || error.message);
+            }
+        };
+    
+        fetchCoursesAndReviews();
+    }, []);
+    
     const [isExpanded, setIsExpanded] = useState(false);
     const [showAddReview, setShowAddReview] = useState(false);
     const [activeTab, setActiveTab] = useState(showTab || 'course');
@@ -127,7 +183,7 @@ const DetailModal = ({ show, onHide,showTab }) => {
                                     <strong>{currentCourse.name}</strong>
                                     <button
                                         className="FindRouteBtn"
-                                        onClick={() => window.open("https://map.naver.com/p/entry/place/1708584848?c=14.00,0,0,0,dh")}
+                                        onClick={() => window.open(currentCourse.url)}
                                     >
                                         길찾기
                                     </button>
@@ -152,16 +208,10 @@ const DetailModal = ({ show, onHide,showTab }) => {
                                     </tbody>
                                 </table>
 
-                                <div className="WeatherSection">
-                                    <strong>날씨</strong>
-                                    <div className="WeatherTags">
-                                        <Weather></Weather>
-                                    </div>
-                                </div>
-
                                 <div className="ReviewSection">
                                     <div className="CourseInfo">
                                         <strong>리뷰 ({currentCourse.reviews.length})</strong>
+                                        현재 공원/코스 {currentCourse.national_park_no}, {currentCourse.track_no} 
                                         <div className="ReviewButtons">
                                             <button className="MoreLink" onClick={toggleExpand}>
                                                 {isExpanded ? "접기" : "자세히"}
@@ -200,7 +250,6 @@ const DetailModal = ({ show, onHide,showTab }) => {
                     </Modal.Footer>
                 )}
             </Modal>
-
             {/* ✨ 리뷰 작성 모달 별도 렌더링 */}
             <AddReviewComponent
                 show={showAddReview}
@@ -209,6 +258,8 @@ const DetailModal = ({ show, onHide,showTab }) => {
                     handleAddReview(newReview);
                     setShowAddReview(false);
                 }}
+                nation_park_no={currentCourse.national_park_no}
+                track_no={currentCourse.track_no}
             />
         </>
     );

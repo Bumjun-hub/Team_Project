@@ -171,25 +171,6 @@
   background-color: #ffc107;
 }
 
-/* 날씨 섹션 */
-.WeatherSection {
-  margin-top: 20px;
-}
-
-.WeatherTags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 8px;
-}
-
-.WeatherTag {
-  background: #eee;
-  padding: 5px 10px;
-  border-radius: 15px;
-  font-size: 12px;
-}
-
 /* 리뷰 섹션 */
 .ReviewSection {
   margin-top: 30px;
