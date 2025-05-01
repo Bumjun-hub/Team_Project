@@ -12,22 +12,11 @@ import { useCallback } from 'react';
 const DetailModal = ({ show, onHide,showTab, props}) => {
 
     // 데이터 호출
-    const [useTrackInfo, setTrackInfo] = useState({
-        track_no: "",           // 트랙 번호
-        track_name: "",         // 트랙명
-        track_find: "",         // 트랙 네이버 길찾기 링크
-        track_detail: "",       // 트랙 상세
-        track_difficulty: "",   // 트랙난이도(쉬움,보통,어려움)
-        track_time: 0,          // 트랙소요시간(분)
-        track_length: 0,        // 트랙길이(km)
-        track_altitude: 0,      // 트랙 고도(m)
-
-        allReviews: [],     // 코스 리뷰
-    });
-
     const national_park_no =1;
     const track_no = 2;
-
+    const [useReview, setReview] = useState({
+        allReviews: [],     // 코스 리뷰
+    });
     const [courses, setCourse] = useState(
         [
             {
@@ -55,12 +44,27 @@ const DetailModal = ({ show, onHide,showTab, props}) => {
                 ]
             },
         ]);
-
     useEffect(() => {
+        axios.get("/review/get_list_track", {params:{national_park_no:national_park_no, track_no:track_no}})
+        .then((result) => {
+            const allReviews = result.data.map((item) => item.review_content);
+            console.log(allReviews);
+            setReview((prev) => ({
+                ...prev,
+                allReviews
+
+            }))
+        })
+        .catch((error) => {
+            console.error("Review 호출 오류", error);
+        });
+    }, []);
+
+    useEffect((allReviews) => {
         axios.get("/track/get_list_national_park", {params:{national_park_no}})
         .then((result) => {
             console.log(result.data);
-            const courses = result.data.map((item) => ({
+            const courses = result.data.map((item, idx) => ({
                 name: item.track_name,
                 url: item.track_find,
                 time: `${item.track_time}시간`,
@@ -68,10 +72,7 @@ const DetailModal = ({ show, onHide,showTab, props}) => {
                 altitude: `${item.track_altitude}m`,
                 difficulty: item.track_difficulty,
                 mapImage: imgMountain1,
-                reviews: [
-                    "힘들지만 정상에서 뷰가 미쳤어요!",
-                    "커플끼리 가면 싸울수도..."
-                ]
+                reviews: [allReviews[idx]]
             }) );
             console.log(courses);
             setCourse(courses);
@@ -81,19 +82,19 @@ const DetailModal = ({ show, onHide,showTab, props}) => {
             console.error("Track List 호출 오류", error);
         });
 
-        axios.get("/review/get_list_track", {params:{national_park_no:national_park_no, track_no:track_no}})
-        .then((result) => {
-            const allReviews = result.data.map((item) => item.review_content);
-            console.log(allReviews);
-            setTrackInfo((prev) => ({
-                ...prev,
-                allReviews
-                
-            }));
-        })
-        .catch((error) => {
-            console.error("리뷰 호출 오류", error);
-        });
+        // axios.get("/review/get_list_track", {params:{national_park_no:national_park_no, track_no:track_no}})
+        // .then((result) => {
+        //     const allReviews = result.data.map((item) => item.review_content);
+        //     console.log(allReviews);
+        //     setTrackInfo((prev) => ({
+        //         ...prev,
+        //         allReviews
+
+        //     }));
+        // })
+        // .catch((error) => {
+        //     console.error("리뷰 호출 오류", error);
+        // });
     }, []);
 
     const [isExpanded, setIsExpanded] = useState(false);
