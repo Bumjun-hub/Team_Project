@@ -9,7 +9,7 @@ import axios from 'axios';
 import { useCallback } from 'react';
 
 
-const DetailModal = ({ show, onHide,showTab }) => {
+const DetailModal = ({ show, onHide,showTab, props}) => {
 
     // 데이터 호출
     const [useTrackInfo, setTrackInfo] = useState({
@@ -74,34 +74,11 @@ const DetailModal = ({ show, onHide,showTab }) => {
                 ]
             }) );
             console.log(courses);
-            // name: "코스1",
-            // time: "1시간 30분",
-            // distance: "5km",
-            // altitude: "300m",
-            // difficulty: "쉬움",
-            // mapImage: imgMountain1,
-            // reviews: [
-            //     "힘들어요 ….. ㅠㅠ 하지만 힘든만큼 보람이 있어요.",
-            //     "가족들이랑 같이 좋은 것 같아요 ~~"
-            // ]
-        })
-    }, [])
+            setCourse(courses);
 
-    useEffect(() => {
-        axios.get("/track/get_one_object", {params:{national_park_no: national_park_no, track_no: track_no}})
-        .then((result) => {
-            const track_name = result.data.track_name;
-            const track_find = result.data.track_find;
-            const track_difficulty = result.data.track_difficulty;
-            const track_time = result.data.track_time;
-            const track_length = result.data.track_length;
-            const track_altitude = result.data.track_altitude;
-            setTrackInfo((prev) => ({
-                ...prev, track_name, track_find, track_difficulty, track_time, track_length, track_altitude
-            }))
         })
         .catch((error) => {
-            console.error("데이터 호출 오류", error);
+            console.error("Track List 호출 오류", error);
         });
 
         axios.get("/review/get_list_track", {params:{national_park_no:national_park_no, track_no:track_no}})
