@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import "./LoginInfo.css";
 import { Link } from "react-router-dom";
+import { FaHome } from "react-icons/fa";
+import { MdLogin } from "react-icons/md";
 
 const LoginInfo = () => {
   const [loginUserId, setLoginUserId] = useState(null);
@@ -19,11 +21,12 @@ const LoginInfo = () => {
   if (!loginUserId) {
     return null;
   }
+  
 
   return (
     <div>
       {loginUserId}님 로그인되었습니다!
-      <button onClick={logout} style={{ marginLeft: "10px" }}>로그아웃</button>
+      <button onClick={logout} style={{ marginLeft: "10px" }}><MdLogin className='MdLogin' /></button>
 
       {/* 관리자라면 관리자 페이지 링크 표시 */}
       {loginUserId === "admin" && (

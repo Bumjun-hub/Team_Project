@@ -30,6 +30,7 @@ const Header = (() => {
                     <div className='Login'>
                       {!loginUserId && (
                         <>
+                        
                       {/* 지영 로그인 모달 */}
                       <button className="LoginButton" onClick={()=> setShowLogin(true)}>
                         <MdLogin className="MdLogin" />
