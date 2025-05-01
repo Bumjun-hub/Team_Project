@@ -25,17 +25,24 @@ const EditableTable = ({
   handleAdd,
   handleCancle,
   handleDelete,
+
+  // 리뷰 테이블에서 버튼 예외처리하기 위한 prop
+  showAdd = true,
+  showEdit = true,
 }) => {
   return (
     <CCard className="mb-4">
       <CCardHeader className="text-white bg-secondary">
         {title}
-        <button
-          onClick={() => setAddTable(addTable === tableKey ? null : tableKey)}
-          style={{ marginLeft: '16px' }}
-        >
-          데이터 추가
-        </button>
+
+        {showAdd && (
+          <button
+            onClick={() => setAddTable(addTable === tableKey ? null : tableKey)}
+            style={{ marginLeft: '16px' }}
+          >
+            데이터 추가
+          </button>
+        )}
       </CCardHeader>
       {addTable === tableKey && (
         <div style={{ backgroundColor: '#444', color: '#fff', padding: '12px', display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
@@ -65,7 +72,7 @@ const EditableTable = ({
         </div>
       )}
 
-      <CCardBody style={{maxHeight:'500px',overflowY:'auto'}}>
+      <CCardBody style={{ maxHeight: '500px', overflowY: 'auto' }}>
         <CTable hover responsive>
           <CTableHead className="sticky-header">
             <CTableRow className="bg-secondary">
@@ -80,7 +87,7 @@ const EditableTable = ({
               <CTableRow key={index} className="bg-secondary">
                 {columns.map((col) => (
                   <CTableDataCell key={col.key}>
-                    {editId?.id === item[columns[0].key] && editId?.table === tableKey ? (
+                    {editId?.index === index && editId?.table === tableKey ? (
                       col.type === 'textarea' ? (
                         <textarea
                           style={{ width: '100%' }}
@@ -102,18 +109,22 @@ const EditableTable = ({
                   </CTableDataCell>
                 ))}
                 <CTableDataCell>
-                  {editId?.id === item[columns[0].key] && editId?.table === tableKey ? (
+                  {editId?.index === index && editId?.table === tableKey && showEdit ? (
                     <div style={{ display: 'flex', gap: '8px' }}>
                       <button onClick={handleSave}>저장</button>
                       <button onClick={handleCancle}>취소</button>
+                      <button onClick={() => handleDelete(item, tableKey)}>삭제❌</button>
                     </div>
                   ) : (
-                    <div style={{display:'flex', gap:'8px'}}>
-                    <button onClick={() => handleEdit(item, tableKey, columns[0].key)}>수정✏️</button>
-                    <button onClick={()=> handleDelete(item, tableKey)}>삭제❌</button>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      {showEdit && (
+                        <button onClick={() => handleEdit(item, tableKey, columns[0].key, index)}>수정✏️</button>
+                      )}
+                      <button onClick={() => handleDelete(item, tableKey)}>삭제❌</button>
                     </div>
                   )}
-                
+
+
                 </CTableDataCell>
               </CTableRow>
             ))}

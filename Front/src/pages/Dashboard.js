@@ -29,6 +29,7 @@ const Dashboard = () => {
   const [reviewData, setReviewData] = useState([])
   const [trackData, setTrackData] = useState([])
   const [weatherData, setWeatherData] = useState([])
+  const [editRowKey,setEditRowKey] = useState(null);
 
 
   // 수정중인 행의 ID
@@ -96,9 +97,10 @@ const Dashboard = () => {
   // (각 테이블마다 handleEdit 함수를 써야하는데 각각 만들기엔 유지보수가 어려움)
   // (따라서 공통 handleEdit함수를 사용)
   // (아래 코드에서 수정버튼에 handleEdit 사용하여 값을 넘겨줌)
-  const handleEdit = (item, table, idField) => {
-    setEditId({ id: item[idField], table });
+  const handleEdit = (item, table, idField, index) => {
+    setEditId({ id: item[idField], table, index });
     setEditRow({ ...item });
+    setEditRowKey(index);
   }
 
   const handleRowChange = (field, value) => {
@@ -161,7 +163,7 @@ const Dashboard = () => {
     axios.post(url, newData)
       .then((result) => {
         console.log(result)
-        alert('추가 완료!')
+        alert('추가 완료')
         fetchFn()
         setNewData({})
         setAddTable(null)
@@ -228,7 +230,38 @@ const Dashboard = () => {
         alert('삭제 실패');
       });
   }
+
+  
+  
   return (
+    <>
+      {/* 상단 관리자 페이지 제목 + 홈으로 버튼 */}
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '16px 24px',
+        backgroundColor: '#343a40',
+        color: 'white'
+      }}>
+        <h2 style={{ margin: 0}}>관리자 페이지</h2>
+        <button
+          onClick={() => window.location.href = '/'}
+          style={{
+            padding: '6px 12px',
+            borderRadius: '4px',
+            border: 'none',
+            backgroundColor: '#6c757d',
+            color: 'white',
+            cursor: 'pointer',
+          }}
+        >
+          홈으로 🏠
+        </button>
+      </div>
+
+    
+    
 
     <div style={{ padding: '20px' }} className='bg-dark'>
 
@@ -332,13 +365,13 @@ const Dashboard = () => {
 
       {/* 리뷰 테이블 */}
       <EditableTable
-        title="리뷰 테이블 (track table)"
+        title="리뷰 테이블 (review table)"
         tableKey="review"
         columns={[
           
           { key: 'review_no', label: '리뷰 번호' },
           { key: 'national_park_no', label: '공원 번호' },
-          { key: 'track_no', label: '소개', type: '트랙 번호' },
+          { key: 'track_no', label: '트랙 번호'},
           { key: 'review_created_date', label: '날짜' },
           { key: 'review_last_modified_date', label: '마지막 수정일' },
           { key: 'member_id', label: '유저 아이디' },
@@ -361,11 +394,13 @@ const Dashboard = () => {
         handleAdd={handleAdd}
         handleCancle={handleCancle}
         handleDelete={handleDelete}
+        showAdd={false}
+        showEdit={false}
       />
 
       <EditableTable
-        title="코스 테이블 (track table)"
-        tableKey="track"
+        title="날씨 (weather table)"
+        tableKey="weather"
         columns={[
           { key: 'weather_no', label: '날씨 번호' },
           { key: 'national_park_no', label: '공원 번호' },
@@ -392,6 +427,8 @@ const Dashboard = () => {
 
 
     </div>
+    
+  </>
   )
 }
 
