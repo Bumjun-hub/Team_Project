@@ -21,7 +21,6 @@ const LoginInfo = () => {
   if (!loginUserId) {
     return null;
   }
-  
 
   return (
     <div>
