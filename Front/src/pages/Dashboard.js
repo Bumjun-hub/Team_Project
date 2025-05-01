@@ -20,6 +20,8 @@ import {
   CCol,
 } from '@coreui/react'
 
+import EditableTable from '../components/Table/EditableTable'
+
 const Dashboard = () => {
 
   const [nationalParkData, setNationalParkData] = useState([])
@@ -42,33 +44,43 @@ const Dashboard = () => {
 
   const fetchNationalParkData = () => {
     axios.get('/national_park/get_all_list')
-      .then(response => setNationalParkData(response.data))
+      .then((response) => {
+      console.log(response)
+         setNationalParkData(response.data) })
       .catch(error => console.error(error));
   }
 
   // national_park_office 테이블 정보 불러오기
   const fetchNationalParkOfficeData = () => {
     axios.get('/national_park_office/get_all_list')
-      .then(response => setNationalParkOfficeData(response.data))
+      .then((response) => {
+        console.log(response)
+        setNationalParkOfficeData(response.data)})
       .catch(error => console.error(error));
   }
   // review 테이블 정보 불러오기 
   const fetchReviewData = () => {
     axios.get('/review/get_all_list')
-      .then(response => setReviewData(response.data))
+      .then((response) => {
+        console.log(response)
+        setReviewData(response.data)})
       .catch(error => console.error(error));
   }
   // track 테이블 정보 불러오기
   const fetchTrackData = () => {
     axios.get('/track/get_all_list')
-      .then(response => setTrackData(response.data))
+      .then((response) => {
+        console.log(response)
+        setTrackData(response.data)})
       .catch(error => console.error(error));
   }
 
   // weather 테이블 정보 불러오기
   const fetchWeatherData = () => {
     axios.get('/weather/get_all_list')
-      .then(response => setWeatherData(response.data))
+      .then((response) => {
+        console.log(response)
+        setWeatherData(response.data)})
       .catch(error => console.error(error));
   }
 
@@ -108,7 +120,8 @@ const Dashboard = () => {
     else if (table === 'national_park_office') url = '/national_park_office/modify';
     else if (table === 'weather') url = '/weather/modify';
     axios.put(url, editRow)
-      .then(() => {
+      .then((response) => {
+        console.log(response)
         alert('수정 완료')
         setEditId(null)
         setEditRow({})
@@ -155,10 +168,10 @@ const Dashboard = () => {
       })
       .catch(err => console.error(err))
   }
+
   //데이터 삭제 기능
   const handleDelete = (item, table) => {
-    if (!window.confirm('정말 삭제하시겠습니다?')) return;
-
+    if (!window.confirm('정말 삭제하시겠습니까?')) return;
 
     const urlMap = {
       review: '/review/delete',
@@ -199,12 +212,14 @@ const Dashboard = () => {
       deleteData = { weather_no: item.weather_no };
     }
 
-    axios.delete(url,{
-      headers:{
-      'Content-Type' : 'application/json'
-    },data: deleteData})
-  
-      .then(() => {
+    axios({
+      method: "delete"
+      , url: url
+      , data: deleteData
+    })
+
+      .then((response) => {
+        console.log(response)
         alert('삭제 완료!');
         fetchFn();
       })
@@ -213,314 +228,171 @@ const Dashboard = () => {
         alert('삭제 실패');
       });
   }
+  return (
+
+    <div style={{ padding: '20px' }} className='bg-dark'>
+
+      {/* 국립 공원 테이블 */}
+      <EditableTable
+        title="국립공원 테이블 (national_park)"
+        tableKey="national_park"
+        columns={[
+          { key: 'national_park_no', label: '번호' },
+          { key: 'national_park_name', label: '이름' },
+          { key: 'national_park_official_website', label: '홈페이지' },
+          { key: 'national_park_introduce', label: '소개', type: 'textarea' },
+          { key: 'national_park_latitude', label: '위도' },
+          { key: 'national_park_longitude', label: '경도' },
+          { key: 'national_park_address_1', label: '주소1' },
+          { key: 'national_park_address_2', label: '주소2' },
+          { key: 'national_park_address_3', label: '주소3' },
+        ]}
+        data={nationalParkData}
+        fetchData={fetchNationalParkData}
+        editId={editId}
+        setEditId={setEditId}
+        editRow={editRow}
+        setEditRow={setEditRow}
+        newData={newData}
+        setNewData={setNewData}
+        addTable={addTable}
+        setAddTable={setAddTable}
+        handleRowChange={handleRowChange}
+        handleEdit={handleEdit}
+        handleSave={handleSave}
+        handleAdd={handleAdd}
+        handleCancle={handleCancle}
+        handleDelete={handleDelete}
+      />
+
+      {/* 국립공원 사무소 테이블 */}
+      <EditableTable
+        title="국립공원 사무소 (national_park_office table)"
+        tableKey="national_park_office"
+        columns={[
+          { key: 'national_park_no', label: '공원 번호' },
+          { key: 'national_park_office_no', label: '공원사무소 번호' },
+          { key: 'national_park_office_name', label: '사무소 이름' },
+          { key: 'national_park_office_address', label: '사무소 주소' },
+          { key: 'national_park_office_phone', label: '사무소 번호' },
+        ]}
+        data={nationalParkOfficeData}
+        fetchData={fetchNationalParkOfficeData}
+        editId={editId}
+        setEditId={setEditId}
+        editRow={editRow}
+        setEditRow={setEditRow}
+        newData={newData}
+        setNewData={setNewData}
+        addTable={addTable}
+        setAddTable={setAddTable}
+        handleRowChange={handleRowChange}
+        handleEdit={handleEdit}
+        handleSave={handleSave}
+        handleAdd={handleAdd}
+        handleCancle={handleCancle}
+        handleDelete={handleDelete}
+      />
+
+      {/* 코스 테이블 */}
+      <EditableTable
+        title="코스 테이블 (track table)"
+        tableKey="track"
+        columns={[
+          { key: 'national_park_no', label: '공원 번호' },
+          { key: 'track_no', label: '트랙 번호' },
+          { key: 'track_name', label: '트랙 이름' },
+          { key: 'track_detail', label: '트랙 상세정보', },
+          { key: 'track_difficulty', label: '난이도' },
+          { key: 'track_time', label: '소요시간' },
+          { key: 'track_length', label: '길이' },
+          { key: 'track_altitude', label: '고도' },
+          { key: 'track_latitude', label: '위도' },
+          { key: 'track_longitude', label: '경도' },
+          { key: 'track_find', label: '주소' }
+        ]}
+
+        data={trackData}
+        fetchData={fetchTrackData}
+        editId={editId}
+        setEditId={setEditId}
+        editRow={editRow}
+        setEditRow={setEditRow}
+        newData={newData}
+        setNewData={setNewData}
+        addTable={addTable}
+        setAddTable={setAddTable}
+        handleRowChange={handleRowChange}
+        handleEdit={handleEdit}
+        handleSave={handleSave}
+        handleAdd={handleAdd}
+        handleCancle={handleCancle}
+        handleDelete={handleDelete}
+      />
+
+      {/* 리뷰 테이블 */}
+      <EditableTable
+        title="리뷰 테이블 (track table)"
+        tableKey="review"
+        columns={[
+          
+          { key: 'review_no', label: '리뷰 번호' },
+          { key: 'national_park_no', label: '공원 번호' },
+          { key: 'track_no', label: '소개', type: '트랙 번호' },
+          { key: 'review_created_date', label: '날짜' },
+          { key: 'review_last_modified_date', label: '마지막 수정일' },
+          { key: 'member_id', label: '유저 아이디' },
+          { key: 'review_content', label: '리뷰 내용' }
+
+        ]}
+        data={reviewData}
+        fetchData={fetchReviewData}
+        editId={editId}
+        setEditId={setEditId}
+        editRow={editRow}
+        setEditRow={setEditRow}
+        newData={newData}
+        setNewData={setNewData}
+        addTable={addTable}
+        setAddTable={setAddTable}
+        handleRowChange={handleRowChange}
+        handleEdit={handleEdit}
+        handleSave={handleSave}
+        handleAdd={handleAdd}
+        handleCancle={handleCancle}
+        handleDelete={handleDelete}
+      />
+
+      <EditableTable
+        title="코스 테이블 (track table)"
+        tableKey="track"
+        columns={[
+          { key: 'weather_no', label: '날씨 번호' },
+          { key: 'national_park_no', label: '공원 번호' },
+          { key: 'weather_location_x', label: '날씨 x 좌표' },
+          { key: 'weather_location_y', label: '날씨 y 좌표' },
+        ]}
+        data={weatherData}
+        fetchData={fetchWeatherData}
+        editId={editId}
+        setEditId={setEditId}
+        editRow={editRow}
+        setEditRow={setEditRow}
+        newData={newData}
+        setNewData={setNewData}
+        addTable={addTable}
+        setAddTable={setAddTable}
+        handleRowChange={handleRowChange}
+        handleEdit={handleEdit}
+        handleSave={handleSave}
+        handleAdd={handleAdd}
+        handleCancle={handleCancle}
+        handleDelete={handleDelete}
+      />
 
 
-
-
-return (
-
-  <div style={{ padding: '20px' }} className='bg-dark'>
-    <h1>ㅇㅇㅇ</h1>
-    <CRow className='gy-4'>
-
-      {/* national_park 테이블 */}
-      <CCol xs={12}>
-        <CCard className="Ctable">
-          <CCardHeader>국립공원 테이블 (national_park) &emsp; <button onClick={() => setAddTable(addTable === 'national_park' ? null : 'national_park')}>데이터 추가</button></CCardHeader>
-          {addTable === 'national_park' && (
-
-            // 데이터 추가버튼 클릭시 나올 폼
-            <div style={{ backgroundColor: '#444', color: '#fff', padding: '12px', display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-              <input placeholder="번호" style={{ flex: '1 1 200px' }} value={newData.national_park_no || ''} onChange={e => setNewData({ ...newData, national_park_no: e.target.value })} />
-              <input placeholder="이름" style={{ flex: '1 1 200px' }} value={newData.national_park_name || ''} onChange={e => setNewData({ ...newData, national_park_name: e.target.value })} />
-              <input placeholder="홈페이지" style={{ flex: '1 1 200px' }} value={newData.national_park_official_website || ''} onChange={e => setNewData({ ...newData, national_park_official_website: e.target.value })} />
-              <textarea placeholder="소개" style={{ flex: '2 1 400px', height: '80px' }} value={newData.national_park_introduce || ''} onChange={e => setNewData({ ...newData, national_park_introduce: e.target.value })} />
-              <input placeholder="위도" style={{ flex: '1 1 100px' }} value={newData.national_park_latitude || ''} onChange={e => setNewData({ ...newData, national_park_latitude: e.target.value })} />
-              <input placeholder="경도" style={{ flex: '1 1 100px' }} value={newData.national_park_longitude || ''} onChange={e => setNewData({ ...newData, national_park_longitude: e.target.value })} />
-              <input placeholder="주소1" style={{ flex: '1 1 150px' }} value={newData.national_park_address_1 || ''} onChange={e => setNewData({ ...newData, national_park_address_1: e.target.value })} />
-              <input placeholder="주소2" style={{ flex: '1 1 150px' }} value={newData.national_park_address_2 || ''} onChange={e => setNewData({ ...newData, national_park_address_2: e.target.value })} />
-              <input placeholder="주소3" style={{ flex: '1 1 150px' }} value={newData.national_park_address_3 || ''} onChange={e => setNewData({ ...newData, national_park_address_3: e.target.value })} />
-              <br />
-              <button onClick={handleAdd}>추가</button>
-              <button onClick={() => setAddTable(null)}>취소</button>
-            </div>)}
-
-          <CCardBody style={{ overflowX: 'auto' }}>
-
-            <CTable hover responsive>
-              <CTableHead className='sticky-header'>
-                <CTableRow >
-                  <CTableHeaderCell>national_park_no</CTableHeaderCell>
-                  <CTableHeaderCell>national_park_name</CTableHeaderCell>
-                  <CTableHeaderCell>national_park_official_website</CTableHeaderCell>
-                  <CTableHeaderCell>national_park_introduce</CTableHeaderCell>
-                  <CTableHeaderCell>national_latitude</CTableHeaderCell>
-                  <CTableHeaderCell>national_park_longitude</CTableHeaderCell>
-                  <CTableHeaderCell>national_park_address_1</CTableHeaderCell>
-                  <CTableHeaderCell>national_park_address_2</CTableHeaderCell>
-                  <CTableHeaderCell>national_park_address_3</CTableHeaderCell>
-                </CTableRow>
-              </CTableHead>
-
-              <CTableBody className='CTableBody'>
-                {nationalParkData.map((item, index) => (
-                  <CTableRow key={index} className='bg-secondary'>
-                    <CTableDataCell>{item.national_park_no}</CTableDataCell>
-                    <CTableDataCell>
-                      {editId?.id === item.national_park_no && editId?.table === 'national_park' ? (
-                        <input
-                          value={editRow.national_park_name || ''}
-                          onChange={e => handleRowChange('national_park_name', e.target.value)}
-                        />
-                      ) : item.national_park_name}
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      {editId?.id === item.national_park_no && editId?.table === 'national_park' ? (
-                        <input
-                          value={editRow.national_park_official_website || ''}
-                          onChange={e => handleRowChange('national_park_official_website', e.target.value)}
-                        />
-                      ) : (
-                        <div style={{ maxWidth: '300px', overflowY: 'auto' }}>{item.national_park_official_website}</div>)}
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      {editId?.id === item.national_park_no && editId?.table === 'national_park' ? (
-                        <textarea
-                          style={{ width: '100%' }}
-                          rows={3}
-                          value={editRow.national_park_introduce || ''}
-                          onChange={e => handleRowChange('national_park_introduce', e.target.value)}
-                        />
-                      ) : (
-                        <div style={{ maxWidth: '350px', maxHeight: '80px', overflowY: 'auto', wordBreak: 'break-word' }}>
-                          {item.national_park_introduce}
-                        </div>
-                      )}
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      {editId?.id === item.national_park_no && editId?.table === 'national_park' ? (
-                        <input
-                          value={editRow.national_park_latitude || ''}
-                          onChange={e => handleRowChange('national_park_latitude', e.target.value)}
-                        />
-                      ) : item.national_park_latitude}
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      {editId?.id === item.national_park_no && editId?.table === 'national_park' ? (
-                        <input
-                          value={editRow.national_park_longitude || ''}
-                          onChange={e => handleRowChange('national_park_longitude', e.target.value)}
-                        />
-                      ) : item.national_park_longitude}
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      {editId?.id === item.national_park_no && editId?.table === 'national_park' ? (
-                        <input
-                          value={editRow.national_park_address_1 || ''}
-                          onChange={e => handleRowChange('national_park_address_1', e.target.value)}
-                        />
-                      ) : item.national_park_address_1}
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      {editId?.id === item.national_park_no && editId?.table === 'national_park' ? (
-                        <input
-                          value={editRow.national_park_address_2 || ''}
-                          onChange={e => handleRowChange('national_park_address_2', e.target.value)}
-                        />
-                      ) : item.national_park_address_2}
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      {editId?.id === item.national_park_no && editId?.table === 'national_park' ? (
-                        <input
-                          value={editRow.national_park_address_3 || ''}
-                          onChange={e => handleRowChange('national_park_address_3', e.target.value)}
-                        />
-                      ) : item.national_park_address_3}
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      {editId?.id === item.national_park_no && editId?.table === 'national_park' ? (
-                        <div style={{ display: 'flex', gap: '10px' }}>
-                          <button onClick={handleSave} style={{ minWidth: '50px', whiteSpace: 'nowrap' }} >저장</button>
-                          <button onClick={handleCancle} style={{ minWidth: '50px', whiteSpace: 'nowrap', marginLeft: '6px' }}>취소</button>
-                        </div>
-                      ) : (
-                        <div style={{ display: 'flex', gap: '10px' }}>
-                          <button onClick={() => handleEdit(item, 'national_park', 'national_park_no')} style={{ minWidth: '50px', whiteSpace: 'nowrap' }}>수정✏️</button>
-                          <button onClick={() => handleDelete(item, 'national_park')} style={{ minWidth: '50px', whiteSpace: 'nowrap', }}>삭제❌</button>
-                        </div>
-                      )}
-                    </CTableDataCell>
-                  </CTableRow>
-                ))}
-              </CTableBody>
-            </CTable>
-          </CCardBody>
-        </CCard>
-      </CCol>
-
-      {/* national_park_office 테이블 */}
-      <CCol xs={12}>
-        <CCard className="Ctable">
-          <CCardHeader>국립공원 office 테이블 (national_park_office)</CCardHeader>
-          <CCardBody style={{ overflowX: 'auto' }}>
-
-            <CTable hover responsive>
-              <CTableHead className='sticky-header'>
-                <CTableRow>
-                  <CTableHeaderCell>national_park_no</CTableHeaderCell>
-                  <CTableHeaderCell>national_park_office_no</CTableHeaderCell>
-                  <CTableHeaderCell>national_park_office_name</CTableHeaderCell>
-                  <CTableHeaderCell>national_park_office_address</CTableHeaderCell>
-                  <CTableHeaderCell>national_park_office_phone</CTableHeaderCell>
-
-                </CTableRow>
-              </CTableHead>
-
-              <CTableBody className='CTableBody'>
-                {nationalParkOfficeData.map((item, index) => (
-                  <CTableRow key={index} className='bg-secondary'>
-                    <CTableDataCell>{item.national_park_no}</CTableDataCell>
-                    <CTableDataCell>{item.national_park_office_no}</CTableDataCell>
-                    <CTableDataCell>{item.national_park_office_name}</CTableDataCell>
-                    <CTableDataCell>
-                      <div style={{ maxHeight: '80px', overflowY: 'auto', wordBreak: 'break-word' }}>{item.national_park_office_address}</div>
-                    </CTableDataCell>
-                    <CTableDataCell>{item.national_park_office_phone}</CTableDataCell>
-                  </CTableRow>
-                ))}
-              </CTableBody>
-            </CTable>
-          </CCardBody>
-        </CCard>
-      </CCol>
-
-      {/* review 테이블 */}
-      <CCol xs={12}>
-        <CCard className="Ctable">
-          <CCardHeader>리뷰 테이블 (review)</CCardHeader>
-          <CCardBody style={{ overflowX: 'auto' }}>
-
-            <CTable hover responsive>
-              <CTableHead className='sticky-header'>
-                <CTableRow >
-                  <CTableHeaderCell>national_park_no</CTableHeaderCell>
-                  <CTableHeaderCell>review_no</CTableHeaderCell>
-                  <CTableHeaderCell>track_no</CTableHeaderCell>
-                  <CTableHeaderCell>review_created_date</CTableHeaderCell>
-                  <CTableHeaderCell>review_last_modified_date</CTableHeaderCell>
-                  <CTableHeaderCell>member_id</CTableHeaderCell>
-                  <CTableHeaderCell>review_content</CTableHeaderCell>
-
-                </CTableRow>
-              </CTableHead>
-
-              <CTableBody className='CTableBody'>
-                {reviewData.map((item, index) => (
-                  <CTableRow key={index} className='bg-secondary'>
-                    <CTableDataCell>{item.national_park_no}</CTableDataCell>
-                    <CTableDataCell>{item.review_no}</CTableDataCell>
-                    <CTableDataCell>{item.track_no}</CTableDataCell>
-                    <CTableDataCell>{item.review_created_date}</CTableDataCell>
-                    <CTableDataCell>{item.review_last_modified_date}</CTableDataCell>
-                    <CTableDataCell>{item.member_id}</CTableDataCell>
-                    <CTableDataCell>{item.review_content}</CTableDataCell>
-                  </CTableRow>
-                ))}
-              </CTableBody>
-            </CTable>
-          </CCardBody>
-        </CCard>
-      </CCol>
-
-      {/* track 테이블 */}
-      <CCol xs={12}>
-        <CCard className="Ctable">
-          <CCardHeader>트랙 테이블 (track)</CCardHeader>
-          <CCardBody style={{ overflowX: 'auto' }}>
-
-            <CTable hover responsive>
-              <CTableHead className='sticky-header'>
-                <CTableRow >
-                  <CTableHeaderCell>national_park_no</CTableHeaderCell>
-                  <CTableHeaderCell>track_no</CTableHeaderCell>
-                  <CTableHeaderCell>track_name</CTableHeaderCell>
-                  <CTableHeaderCell>track_detail</CTableHeaderCell>
-                  <CTableHeaderCell>track_difficulty</CTableHeaderCell>
-                  <CTableHeaderCell>track_time</CTableHeaderCell>
-                  <CTableHeaderCell>track_length</CTableHeaderCell>
-                  <CTableHeaderCell>track_altitude</CTableHeaderCell>
-                  <CTableHeaderCell>track_latitude</CTableHeaderCell>
-                  <CTableHeaderCell>track_longitude</CTableHeaderCell>
-                  <CTableHeaderCell>track_find</CTableHeaderCell>
-
-
-
-
-                </CTableRow>
-              </CTableHead>
-
-              <CTableBody className='CTableBody'>
-                {trackData.map((item, index) => (
-                  <CTableRow key={index} className='bg-secondary'>
-                    <CTableDataCell>{item.national_park_no}</CTableDataCell>
-                    <CTableDataCell>{item.track_no}</CTableDataCell>
-                    <CTableDataCell>{item.track_name}</CTableDataCell>
-                    <CTableDataCell>{item.track_detail}</CTableDataCell>
-                    <CTableDataCell>{item.track_difficulty}</CTableDataCell>
-                    <CTableDataCell>{item.track_time}</CTableDataCell>
-                    <CTableDataCell>{item.track_length}</CTableDataCell>
-                    <CTableDataCell>{item.track_altitude}</CTableDataCell>
-                    <CTableDataCell>{item.track_latitude}</CTableDataCell>
-                    <CTableDataCell>{item.track_longitude}</CTableDataCell>
-                    <CTableDataCell><div style={{ maxWidth: '300px', maxHeight: '80px', overflowY: 'auto' }}>{item.track_find}</div></CTableDataCell>
-                  </CTableRow>
-                ))}
-              </CTableBody>
-            </CTable>
-          </CCardBody>
-        </CCard>
-      </CCol>
-
-
-      {/* weather테이블 */}
-      <CCol xs={12}>
-        <CCard className="Ctable">
-          <CCardHeader>날씨 (Weather)</CCardHeader>
-          <CCardBody style={{ overflowX: 'auto' }}>
-
-            <CTable hover responsive>
-              <CTableHead className='sticky-header'>
-                <CTableRow >
-                  <CTableHeaderCell>weather_no</CTableHeaderCell>
-                  <CTableHeaderCell>national_park_no</CTableHeaderCell>
-                  <CTableHeaderCell>weather_location_x</CTableHeaderCell>
-                  <CTableHeaderCell>weather_location_y</CTableHeaderCell>
-                </CTableRow>
-              </CTableHead>
-
-              <CTableBody className='CTableBody'>
-                {weatherData.map((item, index) => (
-                  <CTableRow key={index} className='bg-secondary'>
-                    <CTableDataCell>{item.weather_no}</CTableDataCell>
-                    <CTableDataCell>{item.national_park_no}</CTableDataCell>
-                    <CTableDataCell>{item.weather_location_x}</CTableDataCell>
-                    <CTableDataCell>{item.weather_location_y}</CTableDataCell>
-
-                  </CTableRow>
-                ))}
-              </CTableBody>
-            </CTable>
-          </CCardBody>
-        </CCard>
-      </CCol>
-    </CRow>
-
-
-
-
-
-  </div>
-)
+    </div>
+  )
 }
 
 export default Dashboard;
