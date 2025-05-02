@@ -78,7 +78,7 @@ const DetailModal = ({ show, onHide,showTab}) => {
                     distance: `${item.track_length}km`,
                     altitude: formatAltitude(item.track_altitude),
                     difficulty: item.track_difficulty,
-                    mapImage: imgMountain1,
+                    mapImage: `/img/track/${item.track_no}.png`,
                     reviews: reviewMap[item.track_no] || [] // 매칭된 리뷰 삽입
                 }));
     
