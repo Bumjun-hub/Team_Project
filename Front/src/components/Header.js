@@ -30,7 +30,7 @@ const Header = (() => {
                     <div className='Login'>
                       {!loginUserId && (
                         <>
-                        
+
                       {/* 지영 로그인 모달 */}
                       <button className="LoginButton" onClick={()=> setShowLogin(true)}>
                         <MdLogin className="MdLogin" />
@@ -48,8 +48,8 @@ const Header = (() => {
                     </div>
                 </div>
 
-                {/* <Button className='ModalButton' variant="primary" onClick={(DetailModal) => setShowModal(true)}> 디테일 모달 </Button> */}
-                {/* <DetailModal show={showModal} onHide={() => setShowModal(false)} /> */}
+                <Button className='ModalButton' variant="primary" onClick={(DetailModal) => setShowModal(true)}> 디테일 모달 </Button>
+                <DetailModal show={showModal} onHide={() => setShowModal(false)} />
 
             </div>
 
