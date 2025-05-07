@@ -3,18 +3,35 @@ import { BsDot } from "react-icons/bs";
 import "./SearchList.css";
 import React from "react";
 
-export default function SearchList({ course }) {
+export default function SearchList({ course, onClickSearch}) {
     const [isHovering, setIsHovering] = useState(true);
 
     const handleMouseOver = () => setIsHovering(true);
     const handleMouseOut = () => setIsHovering(false);
 
+
+    const handleClick = () => {
+        if (
+          onClickSearch &&
+          course.parkNo !== undefined &&
+          course.id !== undefined &&
+          course.latitude !== undefined &&
+          course.longitude !== undefined
+        ) {
+          onClickSearch(course.parkNo, course.id, course.latitude, course.longitude);
+        } else {
+          console.warn("위치 정보 부족:", course);
+        }
+      };
+      
     return (
+        
         <div>
             <div
                 className={isHovering ? "searching-box" : "searching-list"}
                 onMouseOver={handleMouseOver}
                 onMouseOut={handleMouseOut}
+                onClick={handleClick}
             >
                 <div>
                     <span className="track-name">{course.name}</span>

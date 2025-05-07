@@ -3,7 +3,7 @@ import "./Sidebar.css";
 import Search from "./search/Search";
 import SearchList from "./search/SearchList";
 
-export default function SideBar() {
+export default function SideBar({onClickSearch}) {
     const [open, setOpen] = useState(false);
     const [courseList, setCourseList] = useState([]);
 
@@ -73,6 +73,8 @@ export default function SideBar() {
                     return {
                         id: track.track_no,
                         parkNo: track.national_park_no,
+                        latitude: track.track_latitude,
+                        longitude: track.track_longitude,
                         name: track.track_name,
                         category: "등산코스",
                         startPoint,
@@ -82,7 +84,7 @@ export default function SideBar() {
                         difficulty: track.track_difficulty,
                         time: formatTime(track.track_time),
                         timeRaw: track.track_time,
-                        elevation: track.track_longitude,
+                        elevation: `${track.track_altitude}m`,
                         address1: park.address1 || "",
                         address2: park.address2 || ""
                     };
@@ -141,7 +143,11 @@ export default function SideBar() {
                     onApplyFilters={setFilters}
                 />
                 {filterCourses().map((course) => (
-                    <SearchList key={`${course.parkNo}-${course.id}`} course={course} />
+                    <SearchList
+                        key={`${course.parkNo}-${course.id}`} course={course}
+                        onClickSearch={onClickSearch}
+                        
+                    />
                 ))}
             </div>
             <div className="sidebar-toggle" onClick={handleToggle}>

@@ -3,12 +3,10 @@ import axios from 'axios';
 
 import DetailModal from './../pages/DetailModal';
 
-const NaverMap = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [showTab, setShowTab] = useState('course');
-  const [selectedInfo, setSelectedInfo] = useState({});
-
+const NaverMap = ({showModal,setShowModal, selectedInfo, setSelectedInfo, showTab, setShowTab, member_id}) => {
   useEffect(() => {
+
+
     const redMarkers = [];
     const blueMarkers = [];
 
@@ -120,7 +118,8 @@ const NaverMap = () => {
                 setShowTab('course');
                 setSelectedInfo({
                   national_park_no: item.national_park_no,
-                  track_no: item.track_no
+                  track_no: item.track_no,
+                  member_id: item.member_id
                 });
                 marker.setAnimation(window.naver.maps.Animation.BOUNCE);
               });
@@ -148,6 +147,8 @@ const NaverMap = () => {
     <>
       {showModal && (
         <DetailModal national_park_no={selectedInfo.national_park_no}
+          member_id ={member_id}
+          track_no={selectedInfo.track_no}
           show={showModal}
           onHide={() => setShowModal(false)}
           showTab={showTab}

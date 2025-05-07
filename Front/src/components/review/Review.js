@@ -9,7 +9,7 @@ const AddReviewComponent = ({
   onHide,
   national_park_no,
   track_no,
-  member_id = "user01"
+  member_id
 }) => {
   const [reviewText, setReviewText] = useState("");
   const [reviews, setReviews] = useState([]);

@@ -8,8 +8,8 @@ import AddReviewComponent from "../components/review/Review";
 import NationalParkInfo from "./NationalParkInfo";
 import axios from 'axios';
 
-const DetailModal = ({ show, onHide, showTab, national_park_no, member_id = "user01" }) => {
-    const [courses, setCourse] = useState([{ member_id: "", name: "", url: "", national_park_no: 2, track_no: "", time: "", distance: "", altitude: "", difficulty: "", mapImage: imgMountain1, reviews: [] }]);
+const DetailModal = ({ show, onHide, showTab, national_park_no, track_no, member_id }) => {
+    const [courses, setCourse] = useState([{ member_id: member_id, name: "", url: "", national_park_no: national_park_no, track_no: "", time: "", distance: "", altitude: "", difficulty: "", mapImage: imgMountain1, reviews: [] }]);
     const [isExpanded, setIsExpanded] = useState(false);
     const [showAddReview, setShowAddReview] = useState(false);
     const [activeTab, setActiveTab] = useState(showTab || 'course');
@@ -62,6 +62,12 @@ const DetailModal = ({ show, onHide, showTab, national_park_no, member_id = "use
             }));
 
             setCourse(updatedCourses);
+            if (track_no) {
+                const index = updatedCourses.findIndex(c => c.track_no === track_no);
+                if (index !== -1) {
+                    setCurrentCourseIndex(index)
+                }
+            }
         } catch (error) {
             console.error("데이터 호출 오류", error.response?.data || error.message);
         }
@@ -175,7 +181,7 @@ const DetailModal = ({ show, onHide, showTab, national_park_no, member_id = "use
                         <Button variant="light" onClick={handleNextCourse} disabled={currentCourseIndex === courses.length - 1}>다음 ▶</Button>
                     </Modal.Footer>
                 )}
-            </Modal>
+            </Modal>    
 
             <AddReviewComponent
                 show={showAddReview}
