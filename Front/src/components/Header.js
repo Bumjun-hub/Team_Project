@@ -48,7 +48,7 @@ const Header = (() => {
                     </div>
                 </div>
 
-                <Button className='ModalButton' variant="primary" onClick={(DetailModal) => setShowModal(true)}> 디테일 모달 </Button>
+                {/* <Button className='ModalButton' variant="primary" onClick={(DetailModal) => setShowModal(true)}> 디테일 모달 </Button> */}
                 <DetailModal show={showModal} onHide={() => setShowModal(false)} />
 
             </div>
