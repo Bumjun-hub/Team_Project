@@ -159,6 +159,7 @@ const DetailModal = ({ show, onHide, showTab, national_park_no, track_no, member
                                     <div className="CourseInfo">
                                         <strong>리뷰 ({currentCourse.reviews.length})</strong>
                                         <div className="ReviewButtons">
+                                            <button className="reload" onClick={fetchCoursesAndReviews}>새로고침</button>
                                             <button className="MoreLink" onClick={toggleExpand}>{isExpanded ? "접기" : "자세히"}</button>
                                             <button className="WriteBtn" onClick={() => setShowAddReview(true)}>리뷰 수정/추가</button>
                                         </div>
@@ -181,7 +182,7 @@ const DetailModal = ({ show, onHide, showTab, national_park_no, track_no, member
                         <Button variant="light" onClick={handleNextCourse} disabled={currentCourseIndex === courses.length - 1}>다음 ▶</Button>
                     </Modal.Footer>
                 )}
-            </Modal>    
+            </Modal>
 
             <AddReviewComponent
                 show={showAddReview}

@@ -186,7 +186,7 @@
   align-items: center;
 }
 
-.MoreLink {
+.MoreLink{
   background: none;
   border: none;
   color: black;
@@ -194,6 +194,26 @@
   text-decoration: underline;
   margin-right: 10px;
   cursor: pointer;
+}
+.reload{
+  background: none;
+  border: none;
+  color: black;
+  font-size: 14px;
+  text-decoration: underline;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+/* 리뷰 작성 버튼 */
+.WriteBtn {
+  background: none;
+  border: none;
+  color: black;
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 4px 8px;
 }
 
 /* 리뷰 말풍선 */
@@ -213,16 +233,7 @@
   white-space: nowrap;
 }
 
-/* 리뷰 작성 버튼 */
-.WriteBtn {
-  background: none;
-  border: none;
-  color: black;
-  font-size: 14px;
-  text-decoration: underline;
-  cursor: pointer;
-  padding: 4px 8px;
-}
+
 
 .WriteBtn:hover {
   color: #490707; /* 마우스 오버시 살짝 진하게 */
