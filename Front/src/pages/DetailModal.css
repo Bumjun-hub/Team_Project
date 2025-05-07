@@ -171,6 +171,10 @@
   background-color: #ffc107;
 }
 
+.Hard {
+  background-color: #e62020;
+}
+
 /* 리뷰 섹션 */
 .ReviewSection {
   margin-top: 30px;
@@ -241,3 +245,5 @@
 .detail-modal-custom .modal-content {
   height: 100%;
 }
+
+
