@@ -153,6 +153,7 @@ const NaverMap = ({showModal,setShowModal, selectedInfo, setSelectedInfo, showTa
           onHide={() => setShowModal(false)}
           showTab={showTab}
           selectedInfo={selectedInfo}
+          
         />
       )}
       <div
