@@ -20,12 +20,12 @@ const Header = (() => {
         <div className='Header'>
             <div className='HeadDiv'>
                 <div className='LeftDiv'>
+                
+                </div>
+                <div className='CenterDiv'>
                 <Link to="/">
                         <FaHome className='FaHome' />
                     </Link>
-                </div>
-                <div className='CenterDiv'>
-                    
                 </div>
                 
                 <div className='RightDiv'>

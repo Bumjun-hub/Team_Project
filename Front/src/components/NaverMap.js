@@ -161,8 +161,8 @@ const NaverMap = ({showModal,setShowModal, selectedInfo, setSelectedInfo, showTa
         style={{
           width: '100%',
           height: '100%',
-          border: '2px solid #ccc',
-          borderRadius: '10px',
+          
+          
           margin: 'auto',
         }}
       ></div>

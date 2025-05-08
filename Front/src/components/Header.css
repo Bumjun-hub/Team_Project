@@ -6,10 +6,7 @@
   width: 100%;
   height: 80px;
   
-
 }
-
-
 .HeadDiv {
   display: flex;
   max-width: 1600px;
@@ -19,7 +16,7 @@
   height: 80px;
   /* 원하는 높이로 */
   padding: 0 20px;
-  border-bottom: 1px solid #ccc;
+  
   background-color: #f9f9f9;
   background-image:url("/public/img/background/headerbear.png");
   background-size: cover;
@@ -57,6 +54,7 @@
 }
 
 
+
 .LoginButton,
 .MemberButton {
   display: flex;
@@ -70,9 +68,14 @@
 }
 
 .MdLogin,
-.FaUserPlus,
-.FaHome {
+.FaUserPlus
+{
   font-size: 40px;
   color: black;
 
+}
+
+.FaHome{
+  font-size:60px;
+  opacity: 0%;
 }
