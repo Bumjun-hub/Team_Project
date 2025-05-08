@@ -56,7 +56,8 @@
 
 
 .LoginButton,
-.MemberButton {
+.MemberButton,
+.guidebtn{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -68,14 +69,50 @@
 }
 
 .MdLogin,
-.FaUserPlus
+.FaUserPlus,
+.FaHome,
+.RiInfoCardLine
 {
   font-size: 40px;
   color: black;
 
 }
 
-.FaHome{
-  font-size:60px;
-  opacity: 0%;
+
+
+/* 가이드 비디오 iframe */
+
+.VideoOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
+
+.VideoWrapper {
+  position: relative;
+  width: 60vw;
+  max-width: 800px;
+  aspect-ratio: 16 / 9;
+  background: black;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.CloseButton {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  font-size: 24px;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+

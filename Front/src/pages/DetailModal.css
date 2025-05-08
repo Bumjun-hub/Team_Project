@@ -227,7 +227,7 @@
   word-break: break-word;
 }
 
-.CutText {
+.SpeechBubble.CutText {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
