@@ -36,7 +36,7 @@ const Header = (() => {
       <div className='HeadDiv'>
 
         <div className='LeftDiv'>
-        <button onClick={() => setShowVideo(true)} className='guidebtn'><RiInfoCardLine className='RiInfoCardLine'/></button>
+
         </div>
 
         {showVideo && (
@@ -48,7 +48,6 @@ const Header = (() => {
                 width="100%"
                 height="100%"
                 srcDoc={iframeContent}
-                
                 allow="autoplay"
                 allowFullScreen
               />
@@ -58,31 +57,32 @@ const Header = (() => {
 
 
         <div className='CenterDiv'>
-          <Link to="/">
-            <FaHome className='FaHome' />
-          </Link>
+
         </div>
 
         <div className='RightDiv'>
+
           <div className='Login'>
             {!loginUserId && (
               <>
-
+                <Link to="/"><FaHome className='FaHome' style={{ paddingTop: '6px' }} /></Link>
                 {/* 지영 로그인 모달 */}
                 <button className="LoginButton" onClick={() => setShowLogin(true)}>
-                  <MdLogin className="MdLogin" />
+                  <MdLogin className="MdLogin"  />
                 </button>
                 <JoinModal show={showLogin} onHide={() => setShowLogin(false)}>
                   <Login onClose={() => setShowLogin(false)} />
                 </JoinModal>
 
-                <Link to="/member" className="MemberButton">
+                <Link to="/member" className="MemberButton" style={{ paddingBottom: '5px' }}>
                   <FaUserPlus className="FaUserPlus" />
                 </Link>
               </>
             )}
             <LoginInfo />
+            <button onClick={() => setShowVideo(true)} className='guidebtn' ><RiInfoCardLine className='RiInfoCardLine' style={{ fontSize: '46px' }} /></button>
           </div>
+
         </div>
 
         {/* <Button className='ModalButton' variant="primary" onClick={(DetailModal) => setShowModal(true)}> 디테일 모달 </Button> */}

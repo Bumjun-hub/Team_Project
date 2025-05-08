@@ -50,19 +50,19 @@
 
 .Login {
   display: flex;
-  gap: 30px;
+  gap: 10px;
 }
 
 
 
 .LoginButton,
 .MemberButton,
-.guidebtn{
+.guidebtn,
+.FaHome{
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
+  font-size: 50px;
   background: transparent;
   border: none;
   text-decoration: none;
@@ -71,11 +71,15 @@
 .MdLogin,
 .FaUserPlus,
 .FaHome,
-.RiInfoCardLine
+.guidebtn
+
 {
   font-size: 40px;
   color: black;
+}
 
+.RiInfoCardLine{
+  font-size: 40px;
 }
 
 
@@ -99,7 +103,7 @@
   position: relative;
   width: 60vw;
   max-width: 800px;
-  aspect-ratio: 16 / 9;
+  height: 380px;
   background: black;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }

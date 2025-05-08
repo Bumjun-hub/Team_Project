@@ -150,8 +150,8 @@ export default function SideBar({onClickSearch}) {
                     />
                 ))}
             </div>
-            <div className="sidebar-toggle" onClick={handleToggle}>
-                {open ? "←" : "→"}
+            <div className="sidebar-toggle" onClick={handleToggle} style={{color:'black'}}>
+                {open ? "▶" : "◀"}
             </div>
         </div>
     );

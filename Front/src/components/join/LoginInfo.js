@@ -23,14 +23,14 @@ const LoginInfo = () => {
   }
 
   return (
-    <div>
-      {loginUserId}님 로그인되었습니다!
-      <button onClick={logout} style={{ marginLeft: "10px" }}><MdLogin className='MdLogin' /></button>
+    <div style={{display:'flex'}}>
+      <b style={{fontSize:'30px', color:'black'}}>{loginUserId}님</b>
+      <button onClick={logout} style={{ marginLeft: "10px" , background:'none' ,border:'none'}}><MdLogin className='MdLogin' /></button>
 
       {/* 관리자라면 관리자 페이지 링크 표시 */}
       {loginUserId === "admin" && (
         <div style={{ marginTop: '8px', textAlign:'center'}}>
-          <Link to="/admin" style={{ color: "#007bff", textDecoration: "underline" }}>
+          <Link to="/admin" style={{ color: "black",textDecoration: "none", fontWeight:'bold', fontSize:'20px'}}>
             [관리자 페이지]
           </Link>
         </div>
