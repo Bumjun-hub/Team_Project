@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="com.project_track.repository.TrackRepository"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.util.Map"/>
+    <fullyQualifiedTypeName name="com.project_track.domain.TrackDomain"/>
+    <fullyQualifiedTypeName name="org.aspectj.weaver.ast.Test"/>
+    <fullyQualifiedTypeName name="com.project_track.service.TestService"/>
+    <fullyQualifiedTypeName name="com.project_track.repository.TestRepository"/>
+    <fullyQualifiedTypeName name="com.project_track.domain.Test"/>
+    <fullyQualifiedTypeName name="java.io.UnsupportedEncodingException"/>
+</qualifiedTypeNameHistroy>

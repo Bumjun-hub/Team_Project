@@ -26,15 +26,35 @@
     font-weight: bold;
 }
 
-.difficulty {
-    background-color: #4CAF50;
+.Easy {
+    background-color: #28a745;
     font-size: 10px;
     color: white;
     height: 12px;
     text-align: center;
     padding: 1px 4px 2px 3px;
     border-radius: 999px;
-}
+  }
+  
+.Medium {
+    background-color: #ffc107;
+    font-size: 10px;
+    color: white;
+    height: 12px;
+    text-align: center;
+    padding: 1px 4px 2px 3px;
+    border-radius: 999px;
+ }
+
+.Hard {
+    background-color: #e62020;
+    font-size: 10px;
+    color: white;
+    height: 12px;
+    text-align: center;
+    padding: 1px 4px 2px 3px;
+    border-radius: 999px;
+ }
 
 .track-name {
     font-weight: bold;

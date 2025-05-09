@@ -5,10 +5,8 @@
   z-index: 1000;
   width: 100%;
   height: 80px;
-
+  
 }
-
-
 .HeadDiv {
   display: flex;
   max-width: 1600px;
@@ -18,8 +16,11 @@
   height: 80px;
   /* 원하는 높이로 */
   padding: 0 20px;
-  border-bottom: 1px solid #ccc;
+  
   background-color: #f9f9f9;
+  background-image:url("/public/img/background/headerbear.png");
+  background-size: cover;
+
 }
 
 /* 왼쪽은 비워둬도 됨 */
@@ -49,17 +50,19 @@
 
 .Login {
   display: flex;
-  gap: 30px;
+  gap: 10px;
 }
 
 
+
 .LoginButton,
-.MemberButton {
+.MemberButton,
+.guidebtn,
+.FaHome{
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
+  font-size: 50px;
   background: transparent;
   border: none;
   text-decoration: none;
@@ -67,8 +70,53 @@
 
 .MdLogin,
 .FaUserPlus,
-.FaHome {
+.FaHome,
+.guidebtn
+
+{
   font-size: 40px;
   color: black;
-
 }
+
+.RiInfoCardLine{
+  font-size: 40px;
+}
+
+
+
+/* 가이드 비디오 iframe */
+
+.VideoOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.VideoWrapper {
+  position: relative;
+  width: 60vw;
+  max-width: 800px;
+  height: 380px;
+  background: black;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.CloseButton {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  font-size: 24px;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+

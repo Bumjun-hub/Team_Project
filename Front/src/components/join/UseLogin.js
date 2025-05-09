@@ -26,7 +26,7 @@ export const UseLogin = () => {
           if (loginId === "admin") {
             window.location.href = "/admin";
           } else {
-            window.location.reload();  
+            window.location.href="/";  
           }           
       } else if (result.data === 1011) {
         alert("존재하지 않는 아이디입니다!");

@@ -1,28 +1,59 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./SearchFilter.css";
+import axios from "axios";
 
-export default function SearchFilter() {
+export default function SearchFilter({ onChange }) {
     const [selectedCity, setSelectedCity] = useState('');
     const [selectedDistrict, setSelectedDistrict] = useState('');
-
     const [difficultyEnabled, setDifficultyEnabled] = useState(false);
     const [timeEnabled, setTimeEnabled] = useState(false);
     const [lengthEnabled, setLengthEnabled] = useState(false);
-
-    const [selectedDifficulty, setSelectedDifficulty] = useState(''); // 단일 선택
-
+    const [selectedDifficulty, setSelectedDifficulty] = useState('');
     const [time, setTime] = useState(1);
     const [length, setLength] = useState(1);
+    const [districtOptions, setDistrictOptions] = useState({});
 
-    const districtOptions = {
-        서울특별시: ["강남구", "노원구", "성북구", "서대문구"],
-        경기도: ["수원시", "성남시", "용인시", "고양시"],
-        부산: ["해운대구", "수영구", "부산진구", "동래구"]
-    };
+    useEffect(() => {
+        const fetchDistrictOptions = async () => {
+            try {
+                const response = await axios.get('/national_park/get_all_list');
+                const data = response.data;
+                const groupedOptions = {};
+                data.forEach(item => {
+                    const city = item.national_park_address_1;
+                    const district = item.national_park_address_2;
+                    if (!groupedOptions[city]) groupedOptions[city] = new Set();
+                    groupedOptions[city].add(district);
+                });
+                const result = {};
+                for (const city in groupedOptions) {
+                    result[city] = Array.from(groupedOptions[city]);
+                }
+                setDistrictOptions(result);
+            } catch (error) {
+                console.error('Error fetching district options:', error);
+            }
+        };
+        fetchDistrictOptions();
+    }, []);
+
+    useEffect(() => {
+        onChange({
+            region: selectedCity,
+            district: selectedDistrict,
+            difficulty: difficultyEnabled ? selectedDifficulty : '',
+            time: timeEnabled ? time : null,
+            length: lengthEnabled ? length : null
+        });
+    }, [
+        selectedCity, selectedDistrict, selectedDifficulty,
+        difficultyEnabled, timeEnabled, lengthEnabled,
+        time, length
+    ]);
 
     const handleCityChange = (e) => {
-        const newCity = e.target.value;
-        setSelectedCity(newCity);
+        const city = e.target.value;
+        setSelectedCity(city);
         setSelectedDistrict('');
     };
 
@@ -50,8 +81,7 @@ export default function SearchFilter() {
 
     return (
         <div className="search-filter-container">
-
-            {/* 지역검색 */}
+            {/* 지역 검색 */}
             <div className="filter-section">
                 <div className="filter-title">지역검색</div>
                 <div className="filter-row">
@@ -61,9 +91,9 @@ export default function SearchFilter() {
                             className="filter-select"
                             value={selectedCity}
                             onChange={handleCityChange}
-                        >
-                            <option value="">선택해주세요</option>
-                            {Object.keys(districtOptions).map((city) => (
+                            >
+                            <option value="">전체</option> {/* 전체 선택 추가 */}
+                            {Object.keys(districtOptions).map(city => (
                                 <option key={city} value={city}>{city}</option>
                             ))}
                         </select>
@@ -76,9 +106,9 @@ export default function SearchFilter() {
                             value={selectedDistrict}
                             onChange={(e) => setSelectedDistrict(e.target.value)}
                             disabled={!selectedCity}
-                        >
-                            <option value="">선택해주세요</option>
-                            {selectedCity && districtOptions[selectedCity].map((district) => (
+                            >
+                            <option value="">전체</option> {/* 전체 선택 추가 */}
+                            {selectedCity && districtOptions[selectedCity]?.map(district => (
                                 <option key={district} value={district}>{district}</option>
                             ))}
                         </select>
@@ -86,14 +116,14 @@ export default function SearchFilter() {
                 </div>
             </div>
 
-            {/* 상세코스 */}
+            {/* 상세 코스 */}
             <div className="filter-section">
                 <div className="filter-title">상세 코스</div>
 
-                {/* 코스 난이도 */}
+                {/* 난이도 */}
                 <div className="filter-row">
-                    <input 
-                        type="checkbox" 
+                    <input
+                        type="checkbox"
                         checked={difficultyEnabled}
                         onChange={() => setDifficultyEnabled(!difficultyEnabled)}
                     />
@@ -101,7 +131,7 @@ export default function SearchFilter() {
                 </div>
                 {difficultyEnabled && (
                     <div className="checkbox-group">
-                        {["쉬움", "보통", "어려움"].map((level) => (
+                        {["쉬움", "보통", "어려움"].map(level => (
                             <label key={level} className="round-checkbox-label">
                                 <input
                                     type="checkbox"
@@ -119,14 +149,16 @@ export default function SearchFilter() {
                 {/* 구간 소요 시간 */}
                 <div className="filter-row space-between">
                     <div className="filter-row">
-                        <input 
-                            type="checkbox" 
+                        <input
+                            type="checkbox"
                             checked={timeEnabled}
                             onChange={() => setTimeEnabled(!timeEnabled)}
                         />
                         <label className="filter-label">구간 소요 시간</label>
                     </div>
-                    {timeEnabled && <div className="slider-value-inline">{getTimeLabel(time)}</div>}
+                    {timeEnabled && (
+                        <div className="slider-value-inline">{getTimeLabel(time)}</div>
+                    )}
                 </div>
                 {timeEnabled && (
                     <div className="slider-container">
@@ -145,14 +177,16 @@ export default function SearchFilter() {
                 {/* 구간 길이 */}
                 <div className="filter-row space-between">
                     <div className="filter-row">
-                        <input 
-                            type="checkbox" 
+                        <input
+                            type="checkbox"
                             checked={lengthEnabled}
                             onChange={() => setLengthEnabled(!lengthEnabled)}
                         />
                         <label className="filter-label">구간 길이</label>
                     </div>
-                    {lengthEnabled && <div className="slider-value-inline">{getLengthLabel(length)}</div>}
+                    {lengthEnabled && (
+                        <div className="slider-value-inline">{getLengthLabel(length)}</div>
+                    )}
                 </div>
                 {lengthEnabled && (
                     <div className="slider-container">

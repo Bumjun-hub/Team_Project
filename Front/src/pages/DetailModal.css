@@ -171,23 +171,8 @@
   background-color: #ffc107;
 }
 
-/* 날씨 섹션 */
-.WeatherSection {
-  margin-top: 20px;
-}
-
-.WeatherTags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 8px;
-}
-
-.WeatherTag {
-  background: #eee;
-  padding: 5px 10px;
-  border-radius: 15px;
-  font-size: 12px;
+.Hard {
+  background-color: #e62020;
 }
 
 /* 리뷰 섹션 */
@@ -201,7 +186,7 @@
   align-items: center;
 }
 
-.MoreLink {
+.MoreLink{
   background: none;
   border: none;
   color: black;
@@ -209,6 +194,26 @@
   text-decoration: underline;
   margin-right: 10px;
   cursor: pointer;
+}
+.reload{
+  background: none;
+  border: none;
+  color: black;
+  font-size: 14px;
+  text-decoration: underline;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+/* 리뷰 작성 버튼 */
+.WriteBtn {
+  background: none;
+  border: none;
+  color: black;
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 4px 8px;
 }
 
 /* 리뷰 말풍선 */
@@ -222,22 +227,13 @@
   word-break: break-word;
 }
 
-.CutText {
+.SpeechBubble.CutText {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-/* 리뷰 작성 버튼 */
-.WriteBtn {
-  background: none;
-  border: none;
-  color: black;
-  font-size: 14px;
-  text-decoration: underline;
-  cursor: pointer;
-  padding: 4px 8px;
-}
+
 
 .WriteBtn:hover {
   color: #490707; /* 마우스 오버시 살짝 진하게 */
@@ -260,3 +256,5 @@
 .detail-modal-custom .modal-content {
   height: 100%;
 }
+
+

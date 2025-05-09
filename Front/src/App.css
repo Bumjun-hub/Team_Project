@@ -1,13 +1,18 @@
 .App {
   width: 100%;
   max-width: 1600px;
-  height: 1024px;
+  min-height: 100vh;
   aspect-ratio: 16 / 9;
   margin: 0 auto;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 1);
+
+
 }
 
-html,body,#root{
+html,
+body
+#root {
   height: 100%;
-  margin:0;
+  margin: 0;
   padding: 0;
 }

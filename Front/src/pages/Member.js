@@ -42,7 +42,7 @@ const Member = () => {
             <img src="/img/peak-happy-bear.jpg" alt="정상에 도착해서 행복한 곰돌이와 동물친구들" className="img" />
 
                 {/* input */} 
-                <div className="join-input">
+                <div className="join-input"ww>
                 <label>* 아이디 (영문, 숫자만 가능)</label>
                     <div className="id-check-row">
                         <input
