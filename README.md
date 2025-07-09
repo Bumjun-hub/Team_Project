@@ -80,14 +80,3 @@
 
 ---
 
-## 🚀 실행 방법
-
-### 🔹 Frontend 실행 (VSCode 기준)
-
-1. VSCode로 `frontend` 디렉토리 열기  
-2. 터미널에서 다음 명령어 실행
-
-```bash
-cd frontend
-npm install
-npm start
